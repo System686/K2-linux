@@ -26,70 +26,80 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.7;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
             text-align: center;
-            padding: 2.5rem 1rem 1.5rem;
+            padding: 3rem 1rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
         }
 
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        header h1 span {
             color: var(--accent-color);
         }
 
         .nav-links {
-            margin-top: 0.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.2s;
         }
 
         .nav-links a:hover {
             color: var(--accent-color);
         }
 
-        .container {
+        main {
             max-width: 800px;
             margin: 0 auto;
             padding: 3rem 1.5rem;
+            flex: 1;
+            width: 100%;
         }
 
         h2 {
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
+            font-size: 1.75rem;
+            margin-top: 2rem;
             margin-bottom: 1rem;
-            color: var(--text-color);
+            color: var(--accent-color);
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.5rem;
         }
 
         h3 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
-            color: var(--accent-color);
+            color: var(--text-color);
         }
 
-        p {
+        p, li {
             color: var(--text-muted);
             margin-bottom: 1rem;
         }
 
         ul {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         pre {
@@ -103,15 +113,12 @@
 
         code {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            color: #38bdf8;
             font-size: 0.9rem;
+            color: var(--accent-color);
         }
 
-        p code, li code {
-            background-color: var(--code-bg);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
+        pre code {
+            color: #e2e8f0;
         }
 
         footer {
@@ -126,47 +133,55 @@
 <body>
 
     <header>
-        <h1>K2 Linux Handbook</h1>
+        <h1>K2 <span>Handbook</span></h1>
+        <p>The official guide to installing and configuring K2 Linux.</p>
         <div class="nav-links">
-            <a href="index.html">&larr; Back to Home</a>
+            <a href="index.html">Home</a> &bull;
+            <a href="handbook.html">Handbook</a>
         </div>
     </header>
 
-    <div class="container">
-        <h2>1. Introduction</h2>
-        <p>Welcome to the official K2 Linux Handbook. K2 is a minimalist, independent Linux distribution built around BusyBox, OpenRC, and the XBPS package manager. This guide covers installation, service configuration, and package management.</p>
+    <main>
+        <h2>1. Introduzione</h2>
+        <p>Benvenuto nell'Handbook ufficiale di <strong>K2 Linux</strong>. Questa guida ti accompagnerà passo dopo passo nell'installazione manuale della distribuzione tramite l'archivio Stage3 e la configurazione del sistema di init OpenRC.</p>
 
-        <h2>2. Installing from Stage3</h2>
-        <p>If you downloaded the Stage3 tarball, you can extract it onto any formatted ext4 partition to set up your root file system manually.</p>
-        
-        <h3>Extracting the Archive</h3>
-        <pre><code>mkdir /mnt/k2
-mount /dev/sdX1 /mnt/k2
+        <h2>2. Requisiti di Sistema</h2>
+        <p>K2 Linux è progettato per essere estremamente leggero:</p>
+        <ul>
+            <li><strong>CPU:</strong> 64-bit (x86_64)</li>
+            <li><strong>RAM:</strong> Minimo 512 MB (consigliato 1 GB)</li>
+            <li><strong>Spazio su disco:</strong> Almeno 3 GB liberi</li>
+        </ul>
+
+        <h2>3. Installazione dello Stage3</h2>
+        <p>Per installare il sistema di base partendo dal tarball dello Stage3, avvia una live environment (anche da un'altra distro) e segui questi comandi:</p>
+
+        <pre><code># Partiziona e formatta il disco (es. /dev/sda1)
+mkfs.ext4 /dev/sda1
+
+# Monta il filesystem
+mount /dev/sda1 /mnt/k2
 cd /mnt/k2
-tar -xzvf /path/to/k2-rootfs-stage3.tar.gz</code></pre>
 
-        <h2>3. Managing Services with OpenRC</h2>
-        <p>K2 Linux uses OpenRC as its init system. Services are located in <code>/etc/init.d</code> and can be managed using standard commands inside the system.</p>
-        
-        <h3>Enable a service on boot</h3>
-        <pre><code>rc-update add [service_name] default</code></pre>
+# Scarica ed estrai lo Stage3
+tar xpf /path/to/k2-rootfs.tar.gz
+        </code></pre>
 
-        <h3>Start/Stop a service manually</h3>
-        <pre><code>rc-service [service_name] start</code></pre>
+        <h2>4. Chroot e Configurazione</h2>
+        <p>Entra nel nuovo ambiente di K2 Linux tramite chroot per configurare i componenti essenziali:</p>
 
-        <h2>4. Package Management with XBPS</h2>
-        <p>Software installation and updates are handled through XBPS. Make sure your repository configuration points to the official mirrors.</p>
-        
-        <h3>Sync repositories and install a package</h3>
-        <pre><code>xbps-install -S
-xbps-install [package_name]</code></pre>
-        
-        <h3>Search for a package</h3>
-        <pre><code>xbps-query -Rs [search_term]</code></pre>
-    </div>
+        <pre><code>mount -t proc none /mnt/k2/proc
+mount --rbind /sys /mnt/k2/sys
+mount --rbind /dev /mnt/k2/dev
+
+chroot /mnt/k2 /bin/bash
+        </code></pre>
+
+        <p>Una volta dentro il chroot, potrai impostare la password di root, configurare la rete e gestire i pacchetti tramite XBPS.</p>
+    </main>
 
     <footer>
-        <p>&copy; 2026 K2 Linux Project. All rights reserved.</p>
+        <p>&copy; 2026 K2 Linux Project. Built with passion and minimalism.</p>
     </footer>
 
 </body>
