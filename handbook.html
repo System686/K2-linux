@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handbook - K2 Linux</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --border-color: #334155;
+            --code-bg: #090d16;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        header {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            margin-top: 0.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #38bdf8;
+            font-size: 0.9rem;
+        }
+
+        p code, li code {
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>K2 Linux Handbook</h1>
+        <div class="nav-links">
+            <a href="index.html">&larr; Back to Home</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>1. Introduction</h2>
+        <p>Welcome to the official K2 Linux Handbook. K2 is a minimalist, independent Linux distribution built around BusyBox, OpenRC, and the XBPS package manager. This guide covers installation, service configuration, and package management.</p>
+
+        <h2>2. Installing from Stage3</h2>
+        <p>If you downloaded the Stage3 tarball, you can extract it onto any formatted ext4 partition to set up your root file system manually.</p>
+        
+        <h3>Extracting the Archive</h3>
+        <pre><code>mkdir /mnt/k2
+mount /dev/sdX1 /mnt/k2
+cd /mnt/k2
+tar -xzvf /path/to/k2-rootfs-stage3.tar.gz</code></pre>
+
+        <h2>3. Managing Services with OpenRC</h2>
+        <p>K2 Linux uses OpenRC as its init system. Services are located in <code>/etc/init.d</code> and can be managed using standard commands inside the system.</p>
+        
+        <h3>Enable a service on boot</h3>
+        <pre><code>rc-update add [service_name] default</code></pre>
+
+        <h3>Start/Stop a service manually</h3>
+        <pre><code>rc-service [service_name] start</code></pre>
+
+        <h2>4. Package Management with XBPS</h2>
+        <p>Software installation and updates are handled through XBPS. Make sure your repository configuration points to the official mirrors.</p>
+        
+        <h3>Sync repositories and install a package</h3>
+        <pre><code>xbps-install -S
+xbps-install [package_name]</code></pre>
+        
+        <h3>Search for a package</h3>
+        <pre><code>xbps-query -Rs [search_term]</code></pre>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 K2 Linux Project. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
