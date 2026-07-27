@@ -3,434 +3,264 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K2-Linux | Hardcore DIY Distribution</title>
-  
-  <!-- Monospace & Sans Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <title>K2-Linux | Source-based Meta-Distribution</title>
   <style>
-    :root {
-      --primary: #0052cc;
-      --primary-hover: #003d99;
-      --primary-light: #e6f0ff;
-      --bg: #ffffff;
-      --bg-alt: #f4f7fa;
-      --border: #d0d7de;
-      --text: #0f172a;
-      --text-muted: #475569;
-      --code-bg: #091e42;
-      --code-text: #e6f0ff;
-      --radius: 6px;
-      --transition: all 0.2s ease-in-out;
-    }
-
-    * {
+    /* ESSENTIAL GENTOO-LIKE STYLING */
+    body {
+      background-color: #ffffff;
+      color: #222222;
+      font-family: Arial, Helvetica, sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      line-height: 1.5;
     }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
+    /* TOP BAR & HEADER */
+    .top-bar {
+      background-color: #003366;
+      color: #ffffff;
+      padding: 0.5rem 2rem;
+      font-size: 0.85rem;
     }
 
-    code, pre {
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* NAV */
     header {
-      background: var(--bg);
-      border-bottom: 2px solid var(--primary);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background-color: #0055a5;
+      color: #ffffff;
+      padding: 1.5rem 2rem;
+      border-bottom: 3px solid #002244;
     }
 
-    nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: -1px;
     }
 
-    .logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 800;
-      font-size: 1.4rem;
-      color: var(--primary);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .logo::before {
-      content: "#";
-      color: var(--text-muted);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 600;
+    header p {
+      margin: 0.25rem 0 0 0;
       font-size: 0.95rem;
-      transition: var(--transition);
+      color: #d0e4ff;
     }
 
-    .nav-links a:hover {
-      color: var(--primary);
+    /* NAVIGATION */
+    nav {
+      background-color: #e6f0fa;
+      border-bottom: 1px solid #b8d4f0;
+      padding: 0.5rem 2rem;
     }
 
-    /* HERO */
-    .hero {
-      padding: 4rem 2rem 3rem;
-      background: var(--bg-alt);
-      border-bottom: 1px solid var(--border);
+    nav a {
+      color: #003366;
+      text-decoration: none;
+      font-weight: bold;
+      margin-right: 1.5rem;
+      font-size: 0.9rem;
     }
 
-    .hero-container {
-      max-width: 1100px;
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* MAIN CONTENT CONTAINER */
+    .container {
+      max-width: 1000px;
       margin: 0 auto;
+      padding: 2rem;
     }
 
-    .hero h1 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 2.2rem;
-      color: var(--primary);
-      margin-bottom: 0.75rem;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 750px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-cmd {
-      background: var(--code-bg);
-      color: var(--code-text);
-      padding: 1rem 1.5rem;
-      border-radius: var(--radius);
-      display: inline-block;
-      box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
-      animation: fadeIn 0.8s ease-out;
-    }
-
-    .hero-cmd span {
-      color: #00d4ff;
-    }
-
-    /* SECTIONS COMMON */
-    section {
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-      border-bottom: 2px solid var(--primary-light);
-      padding-bottom: 0.5rem;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
+    /* SECTIONS & BOXES */
+    .box {
+      border: 1px solid #b8d4f0;
+      background-color: #f8fbff;
       margin-bottom: 2rem;
     }
 
-    /* STAGES GRID */
-    .stages-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+    .box-header {
+      background-color: #004488;
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      font-size: 1rem;
     }
 
-    .stage-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      background: var(--bg);
-      transition: var(--transition);
-      position: relative;
+    .box-content {
+      padding: 1rem;
     }
 
-    .stage-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    h2 {
+      color: #003366;
+      border-bottom: 1px solid #003366;
+      padding-bottom: 0.25rem;
+      font-size: 1.3rem;
+      margin-top: 0;
     }
 
-    .stage-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-      background: var(--primary-light);
-      color: var(--primary);
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-
-    .stage-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .stage-card p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    /* TABLES (ISO & DOWNLOADS) */
-    .table-container {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-
+    /* TABLES */
     table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
     }
 
     th, td {
-      padding: 0.85rem 1.2rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.95rem;
+      border: 1px solid #cccccc;
+      padding: 0.5rem;
+      text-align: left;
     }
 
     th {
-      background: var(--bg-alt);
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      color: var(--text);
+      background-color: #e6f0fa;
+      color: #003366;
     }
 
-    tr:last-child td {
-      border-bottom: none;
+    tr:nth-child(even) {
+      background-color: #ffffff;
     }
 
-    tr:hover td {
-      background: var(--primary-light);
+    tr:nth-child(odd) {
+      background-color: #f4f8fc;
     }
 
-    /* HANDBOOK LINKS */
-    .handbook-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
+    /* CODE & COMMANDS */
+    code, pre {
+      font-family: "Courier New", Courier, monospace;
+      background-color: #f0f0f0;
+      padding: 0.1rem 0.3rem;
+      border: 1px solid #d0d0d0;
+      font-size: 0.9em;
     }
 
-    .handbook-item {
+    pre {
+      padding: 0.75rem;
       display: block;
-      padding: 1rem 1.25rem;
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius);
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 600;
-      transition: var(--transition);
-      background: var(--bg);
+      white-space: pre-wrap;
+      overflow-x: auto;
     }
 
-    .handbook-item:hover {
-      background: var(--primary-light);
-      transform: translateX(4px);
+    /* LINKS */
+    a {
+      color: #004488;
     }
 
-    .handbook-item span {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 400;
-      margin-top: 0.25rem;
-    }
-
-    /* BUTTONS & LINKS */
-    .btn-link {
-      display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .btn-link:hover {
-      color: var(--primary-hover);
-      text-decoration: underline;
+    a:hover {
+      color: #001122;
     }
 
     /* FOOTER */
     footer {
-      border-top: 1px solid var(--border);
-      background: var(--bg-alt);
-      padding: 2rem;
+      border-top: 1px solid #cccccc;
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+      color: #666666;
       text-align: center;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-    }
-
-    /* ANIMATIONS */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      nav { flex-direction: column; gap: 1rem; align-items: flex-start; }
-      .nav-links { gap: 1rem; }
+      background-color: #f9f9f9;
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <nav>
-      <a href="#" class="logo">K2-LINUX</a>
-      <ul class="nav-links">
-        <li><a href="#handbook">Handbook</a></li>
-        <li><a href="#stages">Stages</a></li>
-        <li><a href="#live-iso">Live ISOs</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-container">
-      <h1>K2-Linux Meta-Distribution</h1>
-      <p>A source-based, highly configurable Linux distribution designed for total control. No bloat, no installer scripts, absolute control over your toolchain and kernel compilation.</p>
-      <div class="hero-cmd">
-        <code><span>root@k2-live #</span> fetch https://distfiles.k2linux.org/stages/stage3-amd64.tar.xz</code>
-      </div>
-    </div>
+  <div class="top-bar">
+    K2-Linux Project Downloads & Infrastructure
   </div>
 
-  <!-- HANDBOOK SECTION -->
-  <section id="handbook">
-    <h2 class="section-title">01. Installation Handbook</h2>
-    <p class="section-desc">Follow the official manual to compile and configure your custom K2-Linux environment from scratch.</p>
-    
-    <div class="handbook-grid">
-      <a href="#" class="handbook-item">
-        1. Preparing the Disks
-        <span>Partitioning (GPT/MBR), LUKS encryption, and filesystems (EXT4/Btrfs).</span>
-      </a>
-      <a href="#" class="handbook-item">
-        2. Unpacking Stage Tarball
-        <span>Setting up chroot, selecting mirrors, and configuring make.conf.</span>
-      </a>
-      <a href="#" class="handbook-item">
-        3. Kernel Configuration
-        <span>Manual kernel compilation with menuconfig and driver selection.</span>
-      </a>
-      <a href="#" class="handbook-item">
-        4. System Bootstrapping
-        <span>Installing init system, bootloader (GRUB/EFISTUB), and essential tools.</span>
-      </a>
-    </div>
-  </section>
+  <header>
+    <h1>K2-Linux/amd64</h1>
+    <p>Source-based Linux distribution targeting x86_64 architectures</p>
+  </header>
 
-  <!-- STAGES SECTION -->
-  <section id="stages">
-    <h2 class="section-title">02. Installation Stages</h2>
-    <p class="section-desc">Choose your entry point. Build every binary yourself or start from a minimal toolchain.</p>
+  <nav>
+    <a href="#downloads">Downloads (amd64)</a>
+    <a href="#handbook">Handbook</a>
+  </nav>
 
-    <div class="stages-grid">
-      <div class="stage-card">
-        <span class="stage-tag">EXPERIMENTAL</span>
-        <h3>Stage 1: From Scratch</h3>
-        <p>Bootstrap the compiler (GCC/Clang), C library (glibc/musl), and core utilities manually. Maximum optimization, requires patience.</p>
-        <a href="#" class="btn-link">Download Stage 1 Archives &rarr;</a>
+  <div class="container">
+
+    <!-- SECTION 1: DOWNLOADS (AMD64 STAGES & LIVE ISO) -->
+    <div class="box" id="downloads">
+      <div class="box-header">Downloads — amd64 (x86_64)</div>
+      <div class="box-content">
+        <p>Use the stage archives below to bootstrap your system, or boot the Installation Live ISO to perform the partition and chroot setup.</p>
+
+        <h2>Stage Archives (amd64)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Description</th>
+              <th>Size</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>stage1-amd64-openrc.tar.xz</code></td>
+              <td>Stage 1 bootstrap tarball (compiler toolchain rebuild required)</td>
+              <td>210 MB</td>
+              <td><a href="#">ISO/HTTP</a> | <a href="#">DIGESTS</a></td>
+            </tr>
+            <tr>
+              <td><code>stage2-amd64-openrc.tar.xz</code></td>
+              <td>Stage 2 bootstrap tarball (core system build from source)</td>
+              <td>245 MB</td>
+              <td><a href="#">ISO/HTTP</a> | <a href="#">DIGESTS</a></td>
+            </tr>
+            <tr>
+              <td><code>stage3-amd64-openrc.tar.xz</code></td>
+              <td>Stage 3 base system tarball (recommended)</td>
+              <td>280 MB</td>
+              <td><a href="#">ISO/HTTP</a> | <a href="#">DIGESTS</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 style="margin-top: 1.5rem;">Live Installation ISO</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Image File</th>
+              <th>Description</th>
+              <th>Size</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>k2-live-install-amd64.iso</code></td>
+              <td>Minimal bootable live environment with network & disk utilities</td>
+              <td>450 MB</td>
+              <td><a href="#">Download ISO</a> | <a href="#">SHA256</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
 
-      <div class="stage-card">
-        <span class="stage-tag">ADVANCED</span>
-        <h3>Stage 2: Toolchain Ready</h3>
-        <p>A pre-compiled bootstrap toolchain is provided. You compile the entire base system packages manually from source.</p>
-        <a href="#" class="btn-link">Download Stage 2 Archives &rarr;</a>
-      </div>
+    <!-- SECTION 2: HANDBOOK -->
+    <div class="box" id="handbook">
+      <div class="box-header">K2-Linux Installation Handbook</div>
+      <div class="box-content">
+        <p>Read the official documentation to install K2-Linux on an amd64 machine.</p>
 
-      <div class="stage-card">
-        <span class="stage-tag">RECOMMENDED</span>
-        <h3>Stage 3: Base System</h3>
-        <p>A complete base system environment is pre-built. Chroot in immediately, configure your kernel, and build your userland.</p>
-        <a href="#" class="btn-link">Download Stage 3 Archives &rarr;</a>
+        <h2>Handbook Contents</h2>
+        <ul>
+          <li><a href="#">1. Preparing the Storage Media</a> — Partitioning (fdisk/parted) and filesystem formatting.</li>
+          <li><a href="#">2. Installing Stage 3 Tarball</a> — Unpacking the stage and setting up <code>make.conf</code>.</li>
+          <li><a href="#">3. Entering Chroot</a> — Mounting virtual filesystems and changing root environment.</li>
+          <li><a href="#">4. Configuring the Linux Kernel</a> — Manual kernel selection using <code>make menuconfig</code>.</li>
+          <li><a href="#">5. System Initialization</a> — Bootloader configuration (GRUB), network setup, and user creation.</li>
+        </ul>
+
+        <h2>Quick Unpack Command</h2>
+        <pre># tar xpvf stage3-amd64-*.tar.xz --xattrs-include='*.*' --numeric-owner</pre>
       </div>
     </div>
-  </section>
 
-  <!-- LIVE ISO SECTION -->
-  <section id="live-iso">
-    <h2 class="section-title">03. Minimal Live ISOs</h2>
-    <p class="section-desc">Minimalist bootable environments equipped with networking, disk tools, and chroot utilities.</p>
+  </div>
 
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Architecture</th>
-            <th>Type</th>
-            <th>Size</th>
-            <th>Checksum (SHA256)</th>
-            <th>Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>x86_64</strong> (amd64)</td>
-            <td>Minimal CLI Live</td>
-            <td>480 MB</td>
-            <td><code>a1b2c3d4...8f9e</code></td>
-            <td><a href="#" class="btn-link">k2-live-amd64.iso</a></td>
-          </tr>
-          <tr>
-            <td><strong>aarch64</strong> (arm64)</td>
-            <td>Minimal CLI Live</td>
-            <td>420 MB</td>
-            <td><code>f9e8d7c6...1a2b</code></td>
-            <td><a href="#" class="btn-link">k2-live-arm64.iso</a></td>
-          </tr>
-          <tr>
-            <td><strong>riscv64</strong></td>
-            <td>Minimal CLI Live</td>
-            <td>390 MB</td>
-            <td><code>3c4d5e6f...7a8b</code></td>
-            <td><a href="#" class="btn-link">k2-live-riscv64.iso</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <p>K2-Linux Distribution Project &bull; Built for source-code purists &bull; Released under GPLv3</p>
+    K2-Linux Project &copy; 2026. All documentation released under open documentation licenses.
   </footer>
 
 </body>
