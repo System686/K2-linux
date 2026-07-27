@@ -3,66 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K2-Linux | The Operating System of the Future</title>
+  <title>K2-Linux | Hardcore DIY Distribution</title>
   
-  <!-- Google Fonts (Inter) -->
+  <!-- Monospace & Sans Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* VARIABLES & RESET */
     :root {
-      --primary: #0066ff;
-      --primary-dark: #0044cc;
+      --primary: #0052cc;
+      --primary-hover: #003d99;
       --primary-light: #e6f0ff;
-      --accent: #00d4ff;
-      --text-dark: #0f172a;
+      --bg: #ffffff;
+      --bg-alt: #f4f7fa;
+      --border: #d0d7de;
+      --text: #0f172a;
       --text-muted: #475569;
-      --bg-white: #ffffff;
-      --bg-alt: #f8fafc;
-      --glass: rgba(255, 255, 255, 0.85);
-      --radius: 16px;
-      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --code-bg: #091e42;
+      --code-text: #e6f0ff;
+      --radius: 6px;
+      --transition: all 0.2s ease-in-out;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
     }
 
     body {
-      background-color: var(--bg-white);
-      color: var(--text-dark);
-      overflow-x: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
       line-height: 1.6;
     }
 
-    /* HEADER & NAV */
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* NAV */
     header {
-      position: fixed;
+      background: var(--bg);
+      border-bottom: 2px solid var(--primary);
+      position: sticky;
       top: 0;
-      width: 100%;
       z-index: 100;
-      backdrop-filter: blur(12px);
-      background: var(--glass);
-      border-bottom: 1px solid rgba(0, 102, 255, 0.1);
-      padding: 1rem 2rem;
     }
 
     nav {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo {
+      font-family: 'JetBrains Mono', monospace;
       font-weight: 800;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: var(--primary);
       text-decoration: none;
       display: flex;
@@ -70,24 +72,22 @@
       gap: 0.5rem;
     }
 
-    .logo-badge {
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
+    .logo::before {
+      content: "#";
+      color: var(--text-muted);
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
       list-style: none;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
       transition: var(--transition);
     }
 
@@ -95,230 +95,214 @@
       color: var(--primary);
     }
 
-    /* HERO SECTION */
+    /* HERO */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-      background: radial-gradient(circle at 50% 20%, #e6f0ff 0%, #ffffff 70%);
-    }
-
-    .hero-content {
-      max-width: 900px;
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 0.5rem 1.2rem;
-      background: var(--primary-light);
-      color: var(--primary);
-      border-radius: 30px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      animation: pulse 2s infinite;
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    h1 span {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      max-width: 650px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* BUTTONS */
-    .btn {
-      padding: 0.875rem 2rem;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 10px 25px -5px rgba(0, 102, 255, 0.4);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px -5px rgba(0, 102, 255, 0.5);
-    }
-
-    .btn-secondary {
-      background: var(--bg-white);
-      color: var(--text-dark);
-      border: 1px solid #e2e8f0;
-    }
-
-    .btn-secondary:hover {
+      padding: 4rem 2rem 3rem;
       background: var(--bg-alt);
-      border-color: #cbd5e1;
-      transform: translateY(-2px);
+      border-bottom: 1px solid var(--border);
     }
 
-    /* MOCKUP PREVIEW */
-    .hero-mockup {
-      margin-top: 4rem;
-      position: relative;
-      border-radius: var(--radius);
-      box-shadow: 0 25px 50px -12px rgba(0, 102, 255, 0.15);
-      background: var(--bg-white);
-      border: 1px solid rgba(0, 102, 255, 0.1);
-      overflow: hidden;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .mockup-header {
-      background: #f1f5f9;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #cbd5e1;
-    }
-    .dot:nth-child(1) { background: #ff5f56; }
-    .dot:nth-child(2) { background: #ffbd2e; }
-    .dot:nth-child(3) { background: #27c93f; }
-
-    .mockup-body {
-      padding: 3rem;
-      background: linear-gradient(180deg, #ffffff 0%, var(--primary-light) 100%);
-      min-height: 250px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: var(--primary-dark);
-      font-family: monospace;
-    }
-
-    /* FEATURES SECTION */
-    .features {
-      padding: 6rem 2rem;
-      background: var(--bg-alt);
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-title h2 {
-      font-size: 2.25rem;
-      font-weight: 800;
-    }
-
-    .grid {
-      max-width: 1200px;
+    .hero-container {
+      max-width: 1100px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
     }
 
-    .card {
-      background: var(--bg-white);
-      padding: 2.5rem;
-      border-radius: var(--radius);
-      border: 1px solid #e2e8f0;
-      transition: var(--transition);
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px -15px rgba(0, 102, 255, 0.1);
-      border-color: var(--primary-light);
-    }
-
-    .card-icon {
-      width: 50px;
-      height: 50px;
-      background: var(--primary-light);
+    .hero h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
       color: var(--primary);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .card h3 {
-      font-size: 1.25rem;
       margin-bottom: 0.75rem;
     }
 
-    .card p {
+    .hero p {
+      font-size: 1.1rem;
       color: var(--text-muted);
+      max-width: 750px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-cmd {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .hero-cmd span {
+      color: #00d4ff;
+    }
+
+    /* SECTIONS COMMON */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* STAGES GRID */
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .stage-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      background: var(--bg);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .stage-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .stage-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .stage-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stage-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* TABLES (ISO & DOWNLOADS) */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--border);
       font-size: 0.95rem;
     }
 
+    th {
+      background: var(--bg-alt);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--primary-light);
+    }
+
+    /* HANDBOOK LINKS */
+    .handbook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .handbook-item {
+      display: block;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: var(--transition);
+      background: var(--bg);
+    }
+
+    .handbook-item:hover {
+      background: var(--primary-light);
+      transform: translateX(4px);
+    }
+
+    .handbook-item span {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 0.25rem;
+    }
+
+    /* BUTTONS & LINKS */
+    .btn-link {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .btn-link:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-alt);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
     /* ANIMATIONS */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero { padding-top: 6rem; }
+      nav { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .nav-links { gap: 1rem; }
     }
   </style>
 </head>
@@ -327,74 +311,127 @@
   <!-- HEADER -->
   <header>
     <nav>
-      <a href="#" class="logo">
-        K2-Linux
-        <span class="logo-badge">v2.4</span>
-      </a>
+      <a href="#" class="logo">K2-LINUX</a>
       <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#docs">Documentation</a></li>
+        <li><a href="#handbook">Handbook</a></li>
+        <li><a href="#stages">Stages</a></li>
+        <li><a href="#live-iso">Live ISOs</a></li>
       </ul>
-      <a href="#download" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Download ISO</a>
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <div class="hero-content">
-      <span class="pill">Engineered for Speed & Security</span>
-      <h1>The Linux Experience Redefined: <span>K2-OS</span></h1>
-      <p>A next-generation operating system built on the Linux kernel. High performance, minimal interface, and maximum protection for developers and creators.</p>
-      
-      <div class="cta-group">
-        <a href="#download" class="btn btn-primary">Download K2-Linux</a>
-        <a href="#docs" class="btn btn-secondary">Read Documentation</a>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-container">
+      <h1>K2-Linux Meta-Distribution</h1>
+      <p>A source-based, highly configurable Linux distribution designed for total control. No bloat, no installer scripts, absolute control over your toolchain and kernel compilation.</p>
+      <div class="hero-cmd">
+        <code><span>root@k2-live #</span> fetch https://distfiles.k2linux.org/stages/stage3-amd64.tar.xz</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- HANDBOOK SECTION -->
+  <section id="handbook">
+    <h2 class="section-title">01. Installation Handbook</h2>
+    <p class="section-desc">Follow the official manual to compile and configure your custom K2-Linux environment from scratch.</p>
+    
+    <div class="handbook-grid">
+      <a href="#" class="handbook-item">
+        1. Preparing the Disks
+        <span>Partitioning (GPT/MBR), LUKS encryption, and filesystems (EXT4/Btrfs).</span>
+      </a>
+      <a href="#" class="handbook-item">
+        2. Unpacking Stage Tarball
+        <span>Setting up chroot, selecting mirrors, and configuring make.conf.</span>
+      </a>
+      <a href="#" class="handbook-item">
+        3. Kernel Configuration
+        <span>Manual kernel compilation with menuconfig and driver selection.</span>
+      </a>
+      <a href="#" class="handbook-item">
+        4. System Bootstrapping
+        <span>Installing init system, bootloader (GRUB/EFISTUB), and essential tools.</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- STAGES SECTION -->
+  <section id="stages">
+    <h2 class="section-title">02. Installation Stages</h2>
+    <p class="section-desc">Choose your entry point. Build every binary yourself or start from a minimal toolchain.</p>
+
+    <div class="stages-grid">
+      <div class="stage-card">
+        <span class="stage-tag">EXPERIMENTAL</span>
+        <h3>Stage 1: From Scratch</h3>
+        <p>Bootstrap the compiler (GCC/Clang), C library (glibc/musl), and core utilities manually. Maximum optimization, requires patience.</p>
+        <a href="#" class="btn-link">Download Stage 1 Archives &rarr;</a>
       </div>
 
-      <!-- INTERFACE MOCKUP -->
-      <div class="hero-mockup">
-        <div class="mockup-header">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-        <div class="mockup-body">
-          <p><strong>k2-user@k2-desktop:~$</strong> uname -r</p>
-          <p style="opacity: 0.8; margin-top: 0.5rem;">K2-Kernel 6.10.0-custom-x86_64</p>
-          <p style="color: var(--primary); margin-top: 1rem;">> System ready for action.</p>
-        </div>
+      <div class="stage-card">
+        <span class="stage-tag">ADVANCED</span>
+        <h3>Stage 2: Toolchain Ready</h3>
+        <p>A pre-compiled bootstrap toolchain is provided. You compile the entire base system packages manually from source.</p>
+        <a href="#" class="btn-link">Download Stage 2 Archives &rarr;</a>
+      </div>
+
+      <div class="stage-card">
+        <span class="stage-tag">RECOMMENDED</span>
+        <h3>Stage 3: Base System</h3>
+        <p>A complete base system environment is pre-built. Chroot in immediately, configure your kernel, and build your userland.</p>
+        <a href="#" class="btn-link">Download Stage 3 Archives &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES SECTION -->
-  <section class="features" id="features">
-    <div class="section-title">
-      <h2>Why Choose K2-Linux?</h2>
-      <p style="color: var(--text-muted); margin-top: 0.5rem;">Built to deliver blazing stability with zero compromises.</p>
-    </div>
+  <!-- LIVE ISO SECTION -->
+  <section id="live-iso">
+    <h2 class="section-title">03. Minimal Live ISOs</h2>
+    <p class="section-desc">Minimalist bootable environments equipped with networking, disk tools, and chroot utilities.</p>
 
-    <div class="grid">
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <h3>Ultra-Fast Kernel</h3>
-        <p>Optimized for low latency and peak hardware performance with minimal resource overhead.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <h3>Secure by Default</h3>
-        <p>Advanced process isolation, sandboxing, and smart permissions keep your data safe at all times.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🎨</div>
-        <h3>Clean Interface</h3>
-        <p>An elegant, distraction-free desktop environment designed with crisp blue tones to keep you focused.</p>
-      </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Architecture</th>
+            <th>Type</th>
+            <th>Size</th>
+            <th>Checksum (SHA256)</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>x86_64</strong> (amd64)</td>
+            <td>Minimal CLI Live</td>
+            <td>480 MB</td>
+            <td><code>a1b2c3d4...8f9e</code></td>
+            <td><a href="#" class="btn-link">k2-live-amd64.iso</a></td>
+          </tr>
+          <tr>
+            <td><strong>aarch64</strong> (arm64)</td>
+            <td>Minimal CLI Live</td>
+            <td>420 MB</td>
+            <td><code>f9e8d7c6...1a2b</code></td>
+            <td><a href="#" class="btn-link">k2-live-arm64.iso</a></td>
+          </tr>
+          <tr>
+            <td><strong>riscv64</strong></td>
+            <td>Minimal CLI Live</td>
+            <td>390 MB</td>
+            <td><code>3c4d5e6f...7a8b</code></td>
+            <td><a href="#" class="btn-link">k2-live-riscv64.iso</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>K2-Linux Distribution Project &bull; Built for source-code purists &bull; Released under GPLv3</p>
+  </footer>
 
 </body>
 </html>
