@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K2 Linux - Dashboard Download</title>
+    <style>
+        :root {
+            --body-bg: #f8fafc;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --card-border: #cbd5e1;
+            --accent-color: #004080;
+            --accent-hover: #0056b3;
+            --header-bg: #102a43;
+            --header-text: #ffffff;
+            --badge-bg: #eef6fc;
+            --badge-text: #004080;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Open Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        header h1 span {
+            color: #63b3ed;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Contenuto Dashboard */
+        .dashboard-container {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .dashboard-header h2 {
+            font-size: 2.2rem;
+            color: var(--header-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: #64748b;
+            font-size: 1.05rem;
+        }
+
+        /* Griglia Download */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .download-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 1.5rem;
+        }
+
+        .specs-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #486581;
+        }
+
+        .specs-list li {
+            margin-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 0.2rem;
+        }
+
+        .specs-list li span:first-child {
+            font-weight: 600;
+        }
+
+        .btn-download {
+            display: block;
+            text-align: center;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.15s;
+        }
+
+        .btn-download:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            color: #94a3b8;
+            text-align: center;
+            padding: 1.25rem;
+            font-size: 0.85rem;
+            border-top: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>K2 <span>Linux</span></h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="handbook.html">Handbook</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Download Center</h2>
+            <p>Scarica l'archivio Stage3 per costruire il tuo rootfs o la Live ISO ufficiale di K2 Linux.</p>
+        </div>
+
+        <div class="downloads-grid">
+            <!-- Card Stage3 -->
+            <div class="download-card">
+                <div class="card-content">
+                    <h3>K2 Stage3 Rootfs</h3>
+                    <p>L'archivio base compresso contenente la struttura di file di sistema minimale e le librerie essenziali per avviare l'ambiente di chroot.</p>
+                    
+                    <ul class="specs-list">
+                        <li><span>Architettura:</span> <span>x86_64</span></li>
+                        <li><span>Formato:</span> <span>tar.xz</span></li>
+                        <li><span>Dimensione stimata:</span> <span>~120 MB</span></li>
+                    </ul>
+                </div>
+                <a href="k2-rootfs.tar.xz" class="btn-download" download>Scarica Stage3 (.tar.xz)</a>
+            </div>
+
+            <!-- Card Live ISO -->
+            <div class="download-card">
+                <div class="card-content">
+                    <h3>K2 Live ISO</h3>
+                    <p>L'immagine disco avviabile per testare il sistema, configurare l'hardware ed eseguire la procedura di installazione guidata.</p>
+                    
+                    <ul class="specs-list">
+                        <li><span>Architettura:</span> <span>x86_64</span></li>
+                        <li><span>Formato:</span> <span>ISO</span></li>
+                        <li><span>Dimensione stimata:</span> <span>~450 MB</span></li>
+                    </ul>
+                </div>
+                <a href="k2-live.iso" class="btn-download" download>Scarica Live ISO (.iso)</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 K2 Linux Project. Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
+</html>
