@@ -1,267 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K2-Linux | Source-based Meta-Distribution</title>
-  <style>
-    /* ESSENTIAL GENTOO-LIKE STYLING */
-    body {
-      background-color: #ffffff;
-      color: #222222;
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.5;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K2-Linux</title>
+    <style>
+        /* CSS Reset e Variabili */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-    /* TOP BAR & HEADER */
-    .top-bar {
-      background-color: #003366;
-      color: #ffffff;
-      padding: 0.5rem 2rem;
-      font-size: 0.85rem;
-    }
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #0f172a;
+            --text-muted: #64748b;
+            --primary-blue: #0066ff;
+            --primary-hover: #0052cc;
+            --secondary-bg: #f8fafc;
+            --border-color: #e2e8f0;
+        }
 
-    header {
-      background-color: #0055a5;
-      color: #ffffff;
-      padding: 1.5rem 2rem;
-      border-bottom: 3px solid #002244;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 1.5rem;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      font-weight: bold;
-      letter-spacing: -1px;
-    }
+        /* Header e Logo */
+        header {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-    header p {
-      margin: 0.25rem 0 0 0;
-      font-size: 0.95rem;
-      color: #d0e4ff;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    /* NAVIGATION */
-    nav {
-      background-color: #e6f0fa;
-      border-bottom: 1px solid #b8d4f0;
-      padding: 0.5rem 2rem;
-    }
+        .logo span {
+            color: var(--primary-blue);
+        }
 
-    nav a {
-      color: #003366;
-      text-decoration: none;
-      font-weight: bold;
-      margin-right: 1.5rem;
-      font-size: 0.9rem;
-    }
+        /* Hero Section */
+        main {
+            text-align: center;
+            max-width: 600px;
+            margin: auto 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
 
-    nav a:hover {
-      text-decoration: underline;
-    }
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
 
-    /* MAIN CONTENT CONTAINER */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
 
-    /* SECTIONS & BOXES */
-    .box {
-      border: 1px solid #b8d4f0;
-      background-color: #f8fbff;
-      margin-bottom: 2rem;
-    }
+        /* Gruppo Bottoni */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
 
-    .box-header {
-      background-color: #004488;
-      color: #ffffff;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
-      font-size: 1rem;
-    }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
 
-    .box-content {
-      padding: 1rem;
-    }
+        /* Bottone Primario: Scarica Stage3 */
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            border: 2px solid var(--primary-blue);
+        }
 
-    h2 {
-      color: #003366;
-      border-bottom: 1px solid #003366;
-      padding-bottom: 0.25rem;
-      font-size: 1.3rem;
-      margin-top: 0;
-    }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
 
-    /* TABLES */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-    }
+        /* Bottone Secondario: Handbook */
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+        }
 
-    th, td {
-      border: 1px solid #cccccc;
-      padding: 0.5rem;
-      text-align: left;
-    }
+        .btn-secondary:hover {
+            background-color: var(--secondary-bg);
+            border-color: var(--text-color);
+            transform: translateY(-1px);
+        }
 
-    th {
-      background-color: #e6f0fa;
-      color: #003366;
-    }
+        /* Footer */
+        footer {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
 
-    tr:nth-child(even) {
-      background-color: #ffffff;
-    }
-
-    tr:nth-child(odd) {
-      background-color: #f4f8fc;
-    }
-
-    /* CODE & COMMANDS */
-    code, pre {
-      font-family: "Courier New", Courier, monospace;
-      background-color: #f0f0f0;
-      padding: 0.1rem 0.3rem;
-      border: 1px solid #d0d0d0;
-      font-size: 0.9em;
-    }
-
-    pre {
-      padding: 0.75rem;
-      display: block;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-
-    /* LINKS */
-    a {
-      color: #004488;
-    }
-
-    a:hover {
-      color: #001122;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid #cccccc;
-      padding: 1.5rem 2rem;
-      font-size: 0.8rem;
-      color: #666666;
-      text-align: center;
-      background-color: #f9f9f9;
-    }
-  </style>
+        /* Responsive */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.25rem;
+            }
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="top-bar">
-    K2-Linux Project Downloads & Infrastructure
-  </div>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">K2<span>-Linux</span></a>
+    </header>
 
-  <header>
-    <h1>K2-Linux/amd64</h1>
-    <p>Source-based Linux distribution targeting x86_64 architectures</p>
-  </header>
+    <!-- Contenuto Principale -->
+    <main>
+        <div>
+            <h1 class="hero-title">K2-Linux</h1>
+            <p class="hero-subtitle">Essenziale, performante e personalizzabile. Scarica l'archivio base o consulta la guida ufficiale per iniziare.</p>
+        </div>
 
-  <nav>
-    <a href="#downloads">Downloads (amd64)</a>
-    <a href="#handbook">Handbook</a>
-  </nav>
+        <!-- Bottoni -->
+        <div class="cta-group">
+            <a href="#download-stage3" class="btn btn-primary">Scarica Stage3</a>
+            <a href="#handbook" class="btn btn-secondary">Handbook</a>
+        </div>
+    </main>
 
-  <div class="container">
-
-    <!-- SECTION 1: DOWNLOADS (AMD64 STAGES & LIVE ISO) -->
-    <div class="box" id="downloads">
-      <div class="box-header">Downloads — amd64 (x86_64)</div>
-      <div class="box-content">
-        <p>Use the stage archives below to bootstrap your system, or boot the Installation Live ISO to perform the partition and chroot setup.</p>
-
-        <h2>Stage Archives (amd64)</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>File</th>
-              <th>Description</th>
-              <th>Size</th>
-              <th>Links</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>stage1-amd64-openrc.tar.xz</code></td>
-              <td>Stage 1 bootstrap tarball (compiler toolchain rebuild required)</td>
-              <td>210 MB</td>
-              <td><a href="#">ISO/HTTP</a> | <a href="#">DIGESTS</a></td>
-            </tr>
-            <tr>
-              <td><code>stage2-amd64-openrc.tar.xz</code></td>
-              <td>Stage 2 bootstrap tarball (core system build from source)</td>
-              <td>245 MB</td>
-              <td><a href="#">ISO/HTTP</a> | <a href="#">DIGESTS</a></td>
-            </tr>
-            <tr>
-              <td><code>stage3-amd64-openrc.tar.xz</code></td>
-              <td>Stage 3 base system tarball (recommended)</td>
-              <td>280 MB</td>
-              <td><a href="#">ISO/HTTP</a> | <a href="#">DIGESTS</a></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2 style="margin-top: 1.5rem;">Live Installation ISO</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Image File</th>
-              <th>Description</th>
-              <th>Size</th>
-              <th>Links</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>k2-live-install-amd64.iso</code></td>
-              <td>Minimal bootable live environment with network & disk utilities</td>
-              <td>450 MB</td>
-              <td><a href="#">Download ISO</a> | <a href="#">SHA256</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- SECTION 2: HANDBOOK -->
-    <div class="box" id="handbook">
-      <div class="box-header">K2-Linux Installation Handbook</div>
-      <div class="box-content">
-        <p>Read the official documentation to install K2-Linux on an amd64 machine.</p>
-
-        <h2>Handbook Contents</h2>
-        <ul>
-          <li><a href="#">1. Preparing the Storage Media</a> — Partitioning (fdisk/parted) and filesystem formatting.</li>
-          <li><a href="#">2. Installing Stage 3 Tarball</a> — Unpacking the stage and setting up <code>make.conf</code>.</li>
-          <li><a href="#">3. Entering Chroot</a> — Mounting virtual filesystems and changing root environment.</li>
-          <li><a href="#">4. Configuring the Linux Kernel</a> — Manual kernel selection using <code>make menuconfig</code>.</li>
-          <li><a href="#">5. System Initialization</a> — Bootloader configuration (GRUB), network setup, and user creation.</li>
-        </ul>
-
-        <h2>Quick Unpack Command</h2>
-        <pre># tar xpvf stage3-amd64-*.tar.xz --xattrs-include='*.*' --numeric-owner</pre>
-      </div>
-    </div>
-
-  </div>
-
-  <footer>
-    K2-Linux Project &copy; 2026. All documentation released under open documentation licenses.
-  </footer>
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 K2-Linux Project. Tutti i diritti riservati.
+    </footer>
 
 </body>
 </html>
