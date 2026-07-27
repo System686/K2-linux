@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2 Linux - The Minimalist Distribution</title>
+    <title>K2 Linux Handbook</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --border-color: #334155;
+            --body-bg: #ffffff;
+            --text-color: #333333;
+            --sidebar-bg: #f4f4f6;
+            --sidebar-border: #dcdce6;
+            --sidebar-text: #444444;
+            --accent-color: #54487a; /* Stile Gentoo purple/slate */
+            --accent-hover: #7b6d9f;
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+            --code-text: #212529;
+            --header-bg: #2b2a33;
+            --header-text: #ffffff;
+            --link-color: #1a0dab;
         }
 
         * {
@@ -22,8 +28,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: "Open Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--body-bg);
             color: var(--text-color);
             line-height: 1.6;
             display: flex;
@@ -31,171 +37,272 @@
             min-height: 100vh;
         }
 
+        /* Top Bar */
         header {
-            text-align: center;
-            padding: 3rem 1rem 1.5rem;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent-color);
         }
 
         header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
         }
 
         header h1 span {
-            color: var(--accent-color);
+            color: #a396db;
         }
 
-        header p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .nav-links {
+        /* Layout Principale a Due Colonne */
+        .container {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem 4rem;
             flex: 1;
+            max-width: 1400px;
             width: 100%;
+            margin: 0 auto;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+        /* Sidebar in stile Handbook */
+        aside {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            padding: 2rem 1.5rem;
+            flex-shrink: 0;
         }
 
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent-color);
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .downloads-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .download-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .download-section h2 {
-            font-size: 1.5rem;
+        aside h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #666;
             margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
         }
 
-        .download-section p {
-            color: var(--text-muted);
+        aside h3:first-child {
+            margin-top: 0;
+        }
+
+        aside ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        aside ul li {
+            margin-bottom: 0.4rem;
+        }
+
+        aside ul li a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 0.92rem;
+            display: block;
+            padding: 0.2rem 0;
+            transition: color 0.15s;
+        }
+
+        aside ul li a:hover, aside ul li a.active {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Contenuto Principale */
+        main {
+            flex: 1;
+            padding: 2.5rem 4rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--sidebar-border);
+            padding-bottom: 0.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Blocchi di codice stile terminale documentazione */
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.88rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: var(--code-bg);
+            padding: 0.15rem 0.3rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--code-border);
+            border-radius: 3px;
+        }
+
+        pre code {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            color: var(--code-text);
+        }
+
+        /* Box Note / Warning */
+        .note {
+            background-color: #fcf8e3;
+            border: 1px solid #faebcc;
+            border-left: 4px solid #8a6d3b;
+            padding: 1rem;
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
+            color: #8a6d3b;
+            border-radius: 0 4px 4px 0;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: 700;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-        }
-
+        /* Footer */
         footer {
+            background-color: var(--sidebar-bg);
+            border-top: 1px solid var(--sidebar-border);
             text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
+            padding: 1.5rem;
             font-size: 0.85rem;
-            border-top: 1px solid var(--border-color);
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--sidebar-border);
+            }
+            main {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>K2 <span>Linux</span></h1>
-        <p>A lightweight, minimal Linux distribution built from scratch.</p>
-        <div class="nav-links">
-            <a href="index.html">Home</a> &bull; 
-            <a href="handbook.html">Handbook</a>
-        </div>
+        <h1>K2 <span>Handbook</span></h1>
+        <div style="font-size: 0.9rem;">Documentazione Ufficiale</div>
     </header>
 
-    <main>
-        <div class="features">
-            <div class="card">
-                <h3>BusyBox Powered</h3>
-                <p>Core system utilities bundled efficiently to keep memory footprint minimal and boot times blazing fast.</p>
-            </div>
-            <div class="card">
-                <h3>OpenRC Init</h3>
-                <p>Fast, reliable, and dependency-based service management designed for speed and complete modularity.</p>
-            </div>
-            <div class="card">
-                <h3>XBPS Package Manager</h3>
-                <p>Fast and modern binary package system to easily install, update, and manage your software stack.</p>
-            </div>
-        </div>
+    <div class="container">
+        <!-- Sidebar di Navigazione stile Gentoo -->
+        <aside>
+            <h3>Sommario</h3>
+            <ul>
+                <li><a href="#intro" class="active">1. Introduzione</a></li>
+                <li><a href="#requirements">2. Requisiti di Sistema</a></li>
+                <li><a href="#extraction">3. Gestione dello Stage3</a></li>
+                <li><a href="#chroot">4. Ambiente di Chroot</a></li>
+                <li><a href="#repack">5. Compilazione Rootfs</a></li>
+            </ul>
 
-        <div class="downloads-grid">
-            <div class="download-section">
-                <div>
-                    <h2>Stage3 Tarball</h2>
-                    <p>Raw rootfs archive for custom builds, chroot environments, or manual installations.</p>
+            <h3>Risorse</h3>
+            <ul>
+                <li><a href="#">Sito Ufficiale</a></li>
+                <li><a href="#">Repository Git</a></li>
+                <li><a href="#">Segnala un Bug</a></li>
+            </ul>
+        </aside>
+
+        <!-- Contenuto principale -->
+        <main>
+            <section id="intro">
+                <h2>1. Introduzione</h2>
+                <p>Benvenuto nell'Handbook ufficiale di <strong>K2 Linux</strong>. Questa guida descrive la procedura dettagliata per l'installazione, la configurazione e la gestione del sistema operativo partendo dall'archivio base Stage3.</p>
+            </section>
+
+            <section id="requirements">
+                <h2>2. Requisiti di Sistema</h2>
+                <p>Prima di procedere con l'installazione, assicurati di disporre dell'hardware minimo richiesto:</p>
+                <ul>
+                    <li><strong>Architettura:</strong> x86_64 (64-bit)</li>
+                    <li><strong>Memoria RAM:</strong> Almeno 512 MB (consigliato 1 GB)</li>
+                    <li><strong>Spazio di archiviazione:</strong> Minimo 3 GB liberi</li>
+                </ul>
+            </section>
+
+            <section id="extraction">
+                <h2>3. Gestione ed Estrazione dello Stage3</h2>
+                <p>L'archivio dello Stage3 (solitamente denominato <code>k2-rootfs</code>) deve essere estratto correttamente preservando i permessi dei file.</p>
+                
+                <div class="note">
+                    <strong>Nota:</strong> Assicurati di estrarre l'archivio all'interno della cartella di lavoro designata (es. <code>~/k2-rootfs</code>) per evitare errori di percorso nei passi successivi.
                 </div>
-                <a href="https://github.com/System686/K2-linux/releases/download/v1.0/k2-rootfs.tar.gz" class="btn">Download Stage3 (.tar.xz)</a>
-            </div>
-    </main>
+
+                <pre><code># Spostati nella home ed estrai l'archivio
+cd ~
+tar xpvf k2-rootfs.tar.xz
+        </code></pre>
+            </section>
+
+            <section id="chroot">
+                <h2>4. Configurazione del Chroot</h2>
+                <p>Per accedere all'ambiente isolato e operare sul sistema K2, è necessario montare i file system virtuali e configurare i binari e le librerie (inclusi <code>bash</code> e le dipendenze della <code>glibc</code>):</p>
+
+                <pre><code># Montaggio dei file system virtuali
+sudo mount -t proc none ~/k2-rootfs/proc
+sudo mount --rbind /sys ~/k2-rootfs/sys
+sudo mount --rbind /dev ~/k2-rootfs/dev
+
+# Ingresso nel sistema tramite chroot
+sudo chroot ~/k2-rootfs /bin/bash
+        </code></pre>
+            </section>
+
+            <section id="repack">
+                <h2>5. Ricompattare il Rootfs</h2>
+                <p>Una volta completate le configurazioni e l'installazione dei pacchetti all'interno del chroot, puoi generare nuovamente l'archivio compresso del sistema:</p>
+
+                <pre><code>cd ~
+tar cpJf k2-rootfs-updated.tar.xz k2-rootfs
+        </code></pre>
+            </section>
+        </main>
+    </div>
 
     <footer>
-        <p>&copy; 2026 K2 Linux Project. Built with passion and minimalism.</p>
+        <p>&copy; 2026 K2 Linux Project. Distribuito sotto licenza libera.</p>
     </footer>
 
 </body>
