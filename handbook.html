@@ -3,307 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2 Linux Handbook</title>
+    <title>K2 OS Handbook - Guida Passo-Passo</title>
     <style>
         :root {
-            --body-bg: #ffffff;
-            --text-color: #333333;
-            --sidebar-bg: #f0f4f8;
-            --sidebar-border: #d0dbe7;
-            --sidebar-text: #2c3e50;
-            --accent-color: #004080; /* Blu Gentoo / Tecnologico */
-            --accent-hover: #0056b3;
-            --code-bg: #f8fafc;
-            --code-border: #e2e8f0;
-            --code-text: #1e293b;
-            --header-bg: #102a43; /* Blu scuro elegante */
-            --header-text: #ffffff;
-            --link-color: #0066cc;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-color: #38bdf8;
+            --code-bg: #090d16;
+            --border-color: #334155;
         }
 
         body {
-            font-family: "Open Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--body-bg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        /* Top Bar */
-        header {
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            padding: 0.75rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--accent-color);
-        }
-
-        header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-        }
-
-        header h1 span {
-            color: #63b3ed;
-        }
-
-        /* Layout Principale a Due Colonne */
         .container {
-            display: flex;
-            flex: 1;
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Sidebar in stile Handbook */
-        aside {
-            width: 280px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--sidebar-border);
-            padding: 2rem 1.5rem;
-            flex-shrink: 0;
-        }
-
-        aside h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #486581;
-            margin-bottom: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        aside h3:first-child {
-            margin-top: 0;
-        }
-
-        aside ul {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        aside ul li {
-            margin-bottom: 0.4rem;
-        }
-
-        aside ul li a {
-            color: var(--sidebar-text);
-            text-decoration: none;
-            font-size: 0.92rem;
-            display: block;
-            padding: 0.2rem 0;
-            transition: color 0.15s;
-        }
-
-        aside ul li a:hover, aside ul li a.active {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        /* Contenuto Principale */
-        main {
-            flex: 1;
-            padding: 2.5rem 4rem;
             max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            font-size: 1.8rem;
             color: var(--accent-color);
-            border-bottom: 1px solid var(--sidebar-border);
-            padding-bottom: 0.3rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        h2:first-of-type {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
             margin-top: 0;
         }
 
-        h3 {
-            font-size: 1.2rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #1e293b;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        ul, ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
+        ul {
+            padding-left: 20px;
         }
 
         li {
-            margin-bottom: 0.3rem;
-        }
-
-        /* Blocchi di codice stile terminale documentazione */
-        pre {
-            background-color: var(--code-bg);
-            border: 1px solid var(--code-border);
-            border-left: 4px solid var(--accent-color);
-            padding: 1rem;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.88rem;
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
-            border-radius: 0 4px 4px 0;
+            margin-bottom: 8px;
         }
 
         code {
             font-family: "Courier New", Courier, monospace;
             background-color: var(--code-bg);
-            padding: 0.15rem 0.3rem;
-            font-size: 0.9rem;
-            border: 1px solid var(--code-border);
-            border-radius: 3px;
+            color: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+            color: #38bdf8;
         }
 
         pre code {
             background-color: transparent;
-            border: none;
             padding: 0;
-            color: var(--code-text);
+            color: inherit;
         }
 
-        /* Box Note / Warning */
         .note {
-            background-color: #eef6fc;
-            border: 1px solid #cce3f6;
-            border-left: 4px solid #004080;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            color: #1a365d;
+            background-color: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 12px;
+            margin: 15px 0;
             border-radius: 0 4px 4px 0;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--sidebar-bg);
-            border-top: 1px solid var(--sidebar-border);
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.85rem;
-            color: #486581;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            aside {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--sidebar-border);
-            }
-            main {
-                padding: 1.5rem;
-            }
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
+<div class="container">
+
     <header>
-        <h1>K2 <span>Handbook</span></h1>
-        <div style="font-size: 0.9rem;">Documentazione Ufficiale</div>
+        <h1>🏔️ K2 OS Handbook</h1>
+        <p class="subtitle">Guida Passo-Passo all'Installazione e Compilazione del Sistema Operativo</p>
     </header>
 
-    <div class="container">
-        <!-- Sidebar di Navigazione stile Gentoo -->
-        <aside>
-            <h3>Sommario</h3>
-            <ul>
-                <li><a href="#intro" class="active">1. Introduzione</a></li>
-                <li><a href="#requirements">2. Requisiti di Sistema</a></li>
-                <li><a href="#extraction">3. Gestione dello Stage3</a></li>
-                <li><a href="#chroot">4. Ambiente di Chroot</a></li>
-                <li><a href="#repack">5. Compilazione Rootfs</a></li>
-            </ul>
-
-            <h3>Risorse</h3>
-            <ul>
-                <li><a href="#">Sito Ufficiale</a></li>
-                <li><a href="#">Repository Git</a></li>
-                <li><a href="#">Segnala un Bug</a></li>
-            </ul>
-        </aside>
-
-        <!-- Contenuto principale -->
-        <main>
-            <section id="intro">
-                <h2>1. Introduzione</h2>
-                <p>Benvenuto nell'Handbook ufficiale di <strong>K2 Linux</strong>. Questa guida descrive la procedura dettagliata per l'installazione, la configurazione e la gestione del sistema operativo partendo dall'archivio base Stage3.</p>
-            </section>
-
-            <section id="requirements">
-                <h2>2. Requisiti di Sistema</h2>
-                <p>Prima di procedere con l'installazione, assicurati di disporre dell'hardware minimo richiesto:</p>
-                <ul>
-                    <li><strong>Architettura:</strong> x86_64 (64-bit)</li>
-                    <li><strong>Memoria RAM:</strong> Almeno 512 MB (consigliato 1 GB)</li>
-                    <li><strong>Spazio di archiviazione:</strong> Minimo 3 GB liberi</li>
-                </ul>
-            </section>
-
-            <section id="extraction">
-                <h2>3. Gestione ed Estrazione dello Stage3</h2>
-                <p>L'archivio dello Stage3 (solitamente denominato <code>k2-rootfs</code>) deve essere estratto correttamente preservando i permessi dei file.</p>
-                
-                <div class="note">
-                    <strong>Nota:</strong> Assicurati di estrarre l'archivio all'interno della cartella di lavoro designata (es. <code>~/k2-rootfs</code>) per evitare errori di percorso nei passi successivi.
-                </div>
-
-                <pre><code># Spostati nella home ed estrai l'archivio
-cd ~
-tar xpvf k2-rootfs.tar.xz
-        </code></pre>
-            </section>
-
-            <section id="chroot">
-                <h2>4. Configurazione del Chroot</h2>
-                <p>Per accedere all'ambiente isolato e operare sul sistema K2, è necessario montare i file system virtuali e configurare i binari e le librerie (inclusi <code>bash</code> e le dipendenze della <code>glibc</code>):</p>
-
-                <pre><code># Montaggio dei file system virtuali
-sudo mount -t proc none ~/k2-rootfs/proc
-sudo mount --rbind /sys ~/k2-rootfs/sys
-sudo mount --rbind /dev ~/k2-rootfs/dev
-
-# Ingresso nel sistema tramite chroot
-sudo chroot ~/k2-rootfs /bin/bash
-        </code></pre>
-            </section>
-
-            <section id="repack">
-                <h2>5. Ricompattare il Rootfs</h2>
-                <p>Una volta completate le configurazioni e l'installazione dei pacchetti all'interno del chroot, puoi generare nuovamente l'archivio compresso del sistema:</p>
-
-                <pre><code>cd ~
-tar cpJf k2-rootfs-updated.tar.xz k2-rootfs
-        </code></pre>
-            </section>
-        </main>
+    <!-- REQUISITI -->
+    <div class="section">
+        <h2>📋 Requisiti Prerequisiti</h2>
+        <ul>
+            <li>Un PC con Linux attivo (il tuo sistema <i>host</i>).</li>
+            <li>Privilegi di amministrazione (<code>sudo</code>).</li>
+            <li>Connessione a Internet attiva per lo scaricamento dei binari statici e dei pacchetti.</li>
+            <li>Strumenti essenziali installati sull'host: <code>wget</code>, <code>tar</code>, <code>xz</code>, <code>squashfs-tools</code>, e <code>genisoimage</code> (o <code>xorriso</code>).</li>
+        </ul>
     </div>
 
-    <footer>
-        <p>&copy; 2026 K2 Linux Project. Distribuito sotto licenza libera.</p>
-    </footer>
+    <!-- STEP 1 -->
+    <div class="section">
+        <h2>🛠️ Step 1: Preparazione dell'Ambiente e di K2 RootFS</h2>
+        <p>Iniziamo creando la struttura del filesystem temporaneo di K2 e scaricando i binari statici del package manager <b>XBPS</b>.</p>
+<pre><code># 1. Creazione delle directory di lavoro
+sudo mkdir -p /mnt/k2-rootfs
+cd /tmp
+
+# 2. Download dei binari statici di XBPS (versione musl)
+wget https://repo-default.voidlinux.org/static/xbps-static-latest.x86_64-musl.tar.xz
+
+# 3. Estrazione dei binari
+mkdir -p xbps-static
+tar -xf xbps-static-latest.x86_64-musl.tar.xz -C xbps-static
+
+# 4. Copia dell'albero di directory e dei binari nel RootFS di K2
+sudo mkdir -p /mnt/k2-rootfs/usr/bin /mnt/k2-rootfs/var/db/xbps/keys /mnt/k2-rootfs/etc/xbps.d
+sudo cp -a xbps-static/usr/bin/* /mnt/k2-rootfs/usr/bin/
+sudo cp -a xbps-static/var/db/xbps/keys/* /mnt/k2-rootfs/var/db/xbps/keys/
+
+# 5. Creazione del symlink standard da /bin a /usr/bin
+sudo ln -s /usr/bin /mnt/k2-rootfs/bin 2>/dev/null || true</code></pre>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="section">
+        <h2>⚙️ Step 2: Configurazione dei Repository e della Rete</h2>
+        <p>Configuriamo i mirror veloci e i server DNS affinché XBPS possa operare correttamente in chroot.</p>
+<pre><code># 1. Configurazione del mirror di rete principale (EU Mirror)
+echo "repository=https://alpha.de.repo.voidlinux.org/current/musl" | sudo tee /mnt/k2-rootfs/etc/xbps.d/00-repository-main.conf
+
+# 2. Definizione esplicita dell'architettura target
+echo "architecture=x86_64-musl" | sudo tee /mnt/k2-rootfs/etc/xbps.d/arch.conf
+
+# 3. Configurazione dei server DNS per la risoluzione dei nomi
+sudo mkdir -p /mnt/k2-rootfs/etc
+echo "nameserver 1.1.1.1" | sudo tee /mnt/k2-rootfs/etc/resolv.conf
+echo "nameserver 8.8.8.8" | sudo tee -a /mnt/k2-rootfs/etc/resolv.conf</code></pre>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="section">
+        <h2>🌀 Step 3: Entrare in Chroot e Popolare K2 OS</h2>
+        <p>Montiamo i filesystem virtuali ed entriamo nell'ambiente isolato per installare i programmi base.</p>
+<pre><code># 1. Montaggio dei filesystem di sistema dell'host
+sudo mount --bind /dev /mnt/k2-rootfs/dev
+sudo mount --bind /proc /mnt/k2-rootfs/proc
+sudo mount --bind /sys /mnt/k2-rootfs/sys
+
+# 2. Accesso all'ambiente chroot
+sudo chroot /mnt/k2-rootfs /bin/sh</code></pre>
+
+        <div class="note">I comandi seguenti vanno eseguiti <b>dentro la shell del chroot</b>:</div>
+
+<pre><code># 3. Impostazione delle variabili d'ambiente essenziali
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export XBPS_ARCH=x86_64-musl
+
+# 4. Sincronizzazione ed installazione dei pacchetti base
+xbps-install -Sy
+xbps-install -y base-files ca-certificates busybox nano htop curl git
+
+# 5. Uscita dal chroot
+exit</code></pre>
+
+<pre><code># 6. Smontaggio pulito dei filesystem
+sudo umount -R /mnt/k2-rootfs/dev
+sudo umount -R /mnt/k2-rootfs/proc
+sudo umount -R /mnt/k2-rootfs/sys</code></pre>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="section">
+        <h2>📦 Step 4: Creazione del Core Archive (<code>k2-core.tar.gz</code>)</h2>
+        <p>Racchiudiamo il sistema operativo in un unico archivio compresso, ignorando le directory di runtime del kernel.</p>
+<pre><code>cd /mnt
+sudo tar --exclude='k2-rootfs/proc/*' \
+         --exclude='k2-rootfs/sys/*' \
+         --exclude='k2-rootfs/dev/*' \
+         --exclude='k2-rootfs/run/*' \
+         --exclude='k2-rootfs/tmp/*' \
+         -cvpzf k2-core.tar.gz k2-rootfs</code></pre>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="section">
+        <h2>💿 Step 5: Assemblaggio della Live ISO Offline</h2>
+        <p>Integriamo l'archivio <code>k2-core.tar.gz</code> e uno script di installazione dentro il filesystem della Live ISO Buildroot.</p>
+        
+        <h3>1. Creazione dell'Overlay di Buildroot</h3>
+<pre><code>mkdir -p ~/buildroot/board/k2/overlay/root/
+cp /mnt/k2-core.tar.gz ~/buildroot/board/k2/overlay/root/</code></pre>
+
+        <h3>2. Creazione dello Script di Installazione (<code>k2-install</code>)</h3>
+        <p>Crea il file <code>~/buildroot/board/k2/overlay/usr/bin/k2-install</code> ed inserisci:</p>
+<pre><code>#!/bin/sh
+echo "=== Installatore Automatico K2 OS ==="
+if [ -z "$1" ]; then
+    echo "Uso: k2-install /dev/sdX"
+    exit 1
+fi
+
+DISK=$1
+echo "Formattazione di ${DISK}1 in corso..."
+mkfs.ext4 -F ${DISK}1
+
+echo "Montaggio della partizione target..."
+mkdir -p /mnt/target
+mount ${DISK}1 /mnt/target
+
+echo "Scompattamento del sistema K2 OS..."
+tar -xzf /root/k2-core.tar.gz -C /mnt/target
+
+echo "Installazione completata con successo! Ora puoi riavviare."</code></pre>
+
+<pre><code># Rendi lo script eseguibile
+chmod +x ~/buildroot/board/k2/overlay/usr/bin/k2-install</code></pre>
+
+        <h3>3. Compilazione dell'ISO</h3>
+<pre><code>cd ~/buildroot
+make menuconfig
+# Configura: System configuration -> Root filesystem overlay directories
+# Imposta il percorso su: board/k2/overlay
+
+make</code></pre>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="section">
+        <h2>🚀 Step 6: Scrittura su USB e Avvio di K2 OS</h2>
+        <ol>
+            <li>Scrivi l'immagine sulla tua chiavetta USB (sostituisci <code>/dev/sdX</code> con il tuo dispositivo):
+<pre><code>sudo dd if=output/images/rootfs.iso9660 of=/dev/sdX bs=4M status=progress conv=fdatasync</code></pre>
+            </li>
+            <li>Inserisci la chiavetta USB nel PC target ed esegui l'avvio da BIOS/UEFI.</li>
+            <li>Avvia l'installazione guidata digitando:
+<pre><code>k2-install /dev/sda</code></pre>
+            </li>
+        </ol>
+    </div>
+
+</div>
 
 </body>
 </html>
