@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2 Linux Handbook</title>
+    <title>K2 Linux</title>
     <style>
         :root {
-            --body-bg: #ffffff;
-            --text-color: #333333;
-            --sidebar-bg: #f0f4f8;
-            --sidebar-border: #d0dbe7;
-            --sidebar-text: #2c3e50;
+            --body-bg: #f8fafc;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --card-border: #cbd5e1;
             --accent-color: #004080; /* Blu Gentoo / Tecnologico */
             --accent-hover: #0056b3;
-            --code-bg: #f8fafc;
-            --code-border: #e2e8f0;
-            --code-text: #1e293b;
             --header-bg: #102a43; /* Blu scuro elegante */
             --header-text: #ffffff;
             --link-color: #0066cc;
@@ -41,7 +37,7 @@
         header {
             background-color: var(--header-bg);
             color: var(--header-text);
-            padding: 0.75rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,7 +45,7 @@
         }
 
         header h1 {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 700;
             letter-spacing: 0.05em;
         }
@@ -58,162 +54,98 @@
             color: #63b3ed;
         }
 
-        /* Layout Principale a Due Colonne */
-        .container {
-            display: flex;
+        /* Layout Principale Landing */
+        .hero-container {
             flex: 1;
-            max-width: 1400px;
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Sidebar in stile Handbook */
-        aside {
-            width: 280px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--sidebar-border);
-            padding: 2rem 1.5rem;
-            flex-shrink: 0;
+        .hero-container h2 {
+            font-size: 2.5rem;
+            color: var(--header-bg);
+            margin-bottom: 1rem;
         }
 
-        aside h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #486581;
+        .hero-container p {
+            font-size: 1.15rem;
+            color: #64748b;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        /* Sezione Scelta (Card) */
+        .choices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .choice-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 2rem;
+            text-align: left;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .choice-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .choice-card h3 {
+            font-size: 1.4rem;
+            color: var(--accent-color);
             margin-bottom: 0.75rem;
-            margin-top: 1.5rem;
         }
 
-        aside h3:first-child {
-            margin-top: 0;
-        }
-
-        aside ul {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        aside ul li {
-            margin-bottom: 0.4rem;
-        }
-
-        aside ul li a {
-            color: var(--sidebar-text);
-            text-decoration: none;
-            font-size: 0.92rem;
-            display: block;
-            padding: 0.2rem 0;
-            transition: color 0.15s;
-        }
-
-        aside ul li a:hover, aside ul li a.active {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        /* Contenuto Principale */
-        main {
-            flex: 1;
-            padding: 2.5rem 4rem;
-            max-width: 900px;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-            border-bottom: 1px solid var(--sidebar-border);
-            padding-bottom: 0.3rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        h2:first-of-type {
-            margin-top: 0;
-        }
-
-        h3 {
-            font-size: 1.2rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #1e293b;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        ul, ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        li {
-            margin-bottom: 0.3rem;
-        }
-
-        /* Blocchi di codice stile terminale documentazione */
-        pre {
-            background-color: var(--code-bg);
-            border: 1px solid var(--code-border);
-            border-left: 4px solid var(--accent-color);
-            padding: 1rem;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.88rem;
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
-            border-radius: 0 4px 4px 0;
-        }
-
-        code {
-            font-family: "Courier New", Courier, monospace;
-            background-color: var(--code-bg);
-            padding: 0.15rem 0.3rem;
-            font-size: 0.9rem;
-            border: 1px solid var(--code-border);
-            border-radius: 3px;
-        }
-
-        pre code {
-            background-color: transparent;
-            border: none;
-            padding: 0;
-            color: var(--code-text);
-        }
-
-        /* Box Note / Warning */
-        .note {
-            background-color: #eef6fc;
-            border: 1px solid #cce3f6;
-            border-left: 4px solid #004080;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+        .choice-card p {
             font-size: 0.95rem;
-            color: #1a365d;
-            border-radius: 0 4px 4px 0;
+            color: #475569;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.15s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
         }
 
         /* Footer */
         footer {
-            background-color: var(--sidebar-bg);
-            border-top: 1px solid var(--sidebar-border);
+            background-color: var(--header-bg);
+            color: #94a3b8;
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.85rem;
-            color: #486581;
+            border-top: 1px solid #1e293b;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            aside {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--sidebar-border);
-            }
-            main {
-                padding: 1.5rem;
+        @media (max-width: 600px) {
+            .hero-container h2 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -221,88 +153,33 @@
 <body>
 
     <header>
-        <h1>K2 <span>Handbook</span></h1>
-        <div style="font-size: 0.9rem;">Documentazione Ufficiale</div>
+        <h1>K2 <span>Linux</span></h1>
+        <div style="font-size: 0.9rem;">Custom Rootfs & Distribution</div>
     </header>
 
-    <div class="container">
-        <!-- Sidebar di Navigazione stile Gentoo -->
-        <aside>
-            <h3>Sommario</h3>
-            <ul>
-                <li><a href="#intro" class="active">1. Introduzione</a></li>
-                <li><a href="#requirements">2. Requisiti di Sistema</a></li>
-                <li><a href="#extraction">3. Gestione dello Stage3</a></li>
-                <li><a href="#chroot">4. Ambiente di Chroot</a></li>
-                <li><a href="#repack">5. Compilazione Rootfs</a></li>
-            </ul>
+    <div class="hero-container">
+        <h2>Benvenuto in K2 Linux</h2>
+        <p>Un sistema operativo minimale e flessibile progettato per il controllo totale dell'ambiente di rootfs, della gestione dello Stage3 e dell'ambiente di chroot.</p>
 
-            <h3>Risorse</h3>
-            <ul>
-                <li><a href="#">Sito Ufficiale</a></li>
-                <li><a href="#">Repository Git</a></li>
-                <li><a href="#">Segnala un Bug</a></li>
-            </ul>
-        </aside>
+        <div class="choices-grid">
+            <!-- Card Home / Progetto -->
+            <div class="choice-card">
+                <h3>Home</h3>
+                <p>Scopri la filosofia del progetto K2 Linux, le novità, le release del rootfs e le informazioni generali sulla distribuzione.</p>
+                <a href="index.html" class="btn">Vai alla Home</a>
+            </div>
 
-        <!-- Contenuto principale -->
-        <main>
-            <section id="intro">
-                <h2>1. Introduzione</h2>
-                <p>Benvenuto nell'Handbook ufficiale di <strong>K2 Linux</strong>. Questa guida descrive la procedura dettagliata per l'installazione, la configurazione e la gestione del sistema operativo partendo dall'archivio base Stage3.</p>
-            </section>
-
-            <section id="requirements">
-                <h2>2. Requisiti di Sistema</h2>
-                <p>Prima di procedere con l'installazione, assicurati di disporre dell'hardware minimo richiesto:</p>
-                <ul>
-                    <li><strong>Architettura:</strong> x86_64 (64-bit)</li>
-                    <li><strong>Memoria RAM:</strong> Almeno 512 MB (consigliato 1 GB)</li>
-                    <li><strong>Spazio di archiviazione:</strong> Minimo 3 GB liberi</li>
-                </ul>
-            </section>
-
-            <section id="extraction">
-                <h2>3. Gestione ed Estrazione dello Stage3</h2>
-                <p>L'archivio dello Stage3 (solitamente denominato <code>k2-rootfs</code>) deve essere estratto correttamente preservando i permessi dei file.</p>
-                
-                <div class="note">
-                    <strong>Nota:</strong> Assicurati di estrarre l'archivio all'interno della cartella di lavoro designata (es. <code>~/k2-rootfs</code>) per evitare errori di percorso nei passi successivi.
-                </div>
-
-                <pre><code># Spostati nella home ed estrai l'archivio
-cd ~
-tar xpvf k2-rootfs.tar.xz
-        </code></pre>
-            </section>
-
-            <section id="chroot">
-                <h2>4. Configurazione del Chroot</h2>
-                <p>Per accedere all'ambiente isolato e operare sul sistema K2, è necessario montare i file system virtuali e configurare i binari e le librerie (inclusi <code>bash</code> e le dipendenze della <code>glibc</code>):</p>
-
-                <pre><code># Montaggio dei file system virtuali
-sudo mount -t proc none ~/k2-rootfs/proc
-sudo mount --rbind /sys ~/k2-rootfs/sys
-sudo mount --rbind /dev ~/k2-rootfs/dev
-
-# Ingresso nel sistema tramite chroot
-sudo chroot ~/k2-rootfs /bin/bash
-        </code></pre>
-            </section>
-
-            <section id="repack">
-                <h2>5. Ricompattare il Rootfs</h2>
-                <p>Una volta completate le configurazioni e l'installazione dei pacchetti all'interno del chroot, puoi generare nuovamente l'archivio compresso del sistema:</p>
-
-                <pre><code>cd ~
-tar cpJf k2-rootfs-updated.tar.xz k2-rootfs
-        </code></pre>
-            </section>
-        </main>
+            <!-- Card Handbook -->
+            <div class="choice-card">
+                <h3>Handbook</h3>
+                <p>Consulta la documentazione tecnica ufficiale, le guide passo-passo per lo Stage3, i comandi di chroot e la configurazione avanzata.</p>
+                <a href="handbook.html" class="btn">Apri l'Handbook</a>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 K2 Linux Project. Distribuito sotto licenza libera.</p>
+        <p>&copy; 2026 K2 Linux Project. Tutti i diritti riservati.</p>
     </footer>
 
 </body>
