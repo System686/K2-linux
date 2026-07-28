@@ -1,0 +1,35 @@
+pkgname="linux-k2"
+pkgver="6.9.8"
+pkgrel=1
+pkgdesc="The Linux kernel and core modules for K2-Linux"
+url="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${pkgver}.tar.xz"
+
+build() {
+    curl -sSL "$url" -o "linux-${pkgver}.tar.xz"
+    tar -xf "linux-${pkgver}.tar.xz"
+    cd "linux-${pkgver}"
+
+    make defconfig
+
+    scripts/config --enable CONFIG_BTRFS_FS
+    scripts/config --enable CONFIG_EXT4_FS
+    scripts/config --enable CONFIG_EFI_STUB
+    scripts/config --enable CONFIG_SQUASHFS
+
+    make -j$(nproc) bImage modules
+}
+
+package() {
+    local destdir="$1"
+    cd "linux-${pkgver}"
+
+    mkdir -p "${destdir}/boot"
+    cp arch/x86/boot/bzImage "${destdir}/boot/vmlinuz-k2"
+
+    make INSTALL_MOD_PATH="${destdir}/usr" modules_install
+
+    cat <<EOF > "${destdir}/boot/k2-kernel.info"
+Kernel: linux-k2
+Version: ${pkgver}
+EOF
+}
