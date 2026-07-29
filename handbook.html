@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handbook di Installazione — K2-Linux</title>
+    <title>Installation Handbook — K2-Linux</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -125,58 +125,58 @@
 <div class="container">
     <header>
         <h1>K2-Linux Handbook</h1>
-        <p class="subtitle">Guida ufficiale all'installazione minimale del sistema e dell'ecosistema <code>peak</code> / <code>climb</code>.</p>
+        <p class="subtitle">Official guide for minimal system installation and the <code>peak</code> / <code>climb</code> ecosystem.</p>
     </header>
 
-    <!-- FASE 1 -->
+    <!-- STEP 1 -->
     <section>
-        <h2>1. Preparazione del Disco</h2>
-        <p>Avvia il sistema da una Live ISO ed effettua il partizionamento del disco di destinazione (es. <code>/dev/sda</code> o <code>/dev/nvme0n1</code>).</p>
+        <h2>1. Disk Preparation</h2>
+        <p>Boot from a Live ISO environment and partition your target drive (e.g., <code>/dev/sda</code> or <code>/dev/nvme0n1</code>).</p>
         
-        <h3>Creazione delle partizioni (UEFI/GPT)</h3>
-        <pre><code># Partiziona il disco con cfdisk
+        <h3>Creating Partitions (UEFI/GPT)</h3>
+        <pre><code># Partition the disk using cfdisk
 cfdisk /dev/sda
 
-# Esempio di schema:
+# Example layout:
 # /dev/sda1 -> 512M (EFI System Partition)
-# /dev/sda2 -> Resto del disco (Linux Root)
+# /dev/sda2 -> Remaining space (Linux Root)
 
-# Formattazione delle partizioni
+# Format the partitions
 mkfs.vfat -F32 /dev/sda1
 mkfs.ext4 /dev/sda2</code></pre>
 
-        <h3>Montaggio dei Filesystem</h3>
-        <pre><code># Monta la root di destinazione
+        <h3>Mounting Filesystems</h3>
+        <pre><code># Mount the root partition
 mount /dev/sda2 /mnt
 
-# Crea e monta la partizione EFI
+# Create and mount the EFI directory
 mkdir -p /mnt/boot/efi
 mount /dev/sda1 /mnt/boot/efi</code></pre>
     </section>
 
-    <!-- FASE 2 -->
+    <!-- STEP 2 -->
     <section>
-        <h2>2. Bootstrap del Sistema Base</h2>
-        <p>Estrai la RootFS di base di K2-Linux ed esegui il bind dei filesystem virtuali prima di entrare in ambiente chroot.</p>
+        <h2>2. Base System Bootstrap</h2>
+        <p>Extract the minimal K2-Linux RootFS and bind the virtual kernel filesystems before entering the chroot environment.</p>
 
-        <pre><code># Estrazione del sistema base
+        <pre><code># Extract the base system
 tar -xvf k2-base-rootfs.tar.xz -C /mnt
 
-# Montaggio dei filesystem virtuali
+# Mount virtual filesystems
 mount --bind /dev /mnt/dev
 mount --bind /dev/pts /mnt/dev/pts
 mount --bind /proc /mnt/proc
 mount --bind /sys /mnt/sys
 mount --bind /run /mnt/run
 
-# Entra nell'ambiente K2-Linux
+# Enter the K2-Linux chroot environment
 chroot /mnt /bin/bash</code></pre>
     </section>
 
-    <!-- FASE 3 -->
+    <!-- STEP 3 -->
     <section>
-        <h2>3. Configurazione dell'Ambiente e Variabili</h2>
-        <p>Configura lo script delle variabili di sistema in <code>/etc/profile.d/k2-env.sh</code> per far individuare i binari, i percorsi KUR e l'editor di testo predefinito.</p>
+        <h2>3. Environment & Variables Setup</h2>
+        <p>Configure the system environment script at <code>/etc/profile.d/k2-env.sh</code> so the shell locates system binaries, KUR paths, and default CLI tools.</p>
 
         <pre><code>cat &lt;&lt; 'EOF' &gt; /etc/profile.d/k2-env.sh
 #!/usr/bin/env bash
@@ -200,53 +200,53 @@ EOF
 source /etc/profile.d/k2-env.sh</code></pre>
     </section>
 
-    <!-- FASE 4 -->
+    <!-- STEP 4 -->
     <section>
-        <h2>4. Installazione di Kernel, GRUB e Strumenti</h2>
-        <p>Scarica ed installa i pacchetti fondamentali dal K2 User Repository usando il gestore pacchetti <code>climb</code>.</p>
+        <h2>4. Kernel, GRUB & Tool Installation</h2>
+        <p>Download, build, and install core packages from the K2 User Repository using the <code>climb</code> package manager helper.</p>
 
-        <pre><code># Installa il Kernel ottimizzato per K2
+        <pre><code># Install the K2-optimized Linux Kernel
 climb -S linux-k2
 
-# Installa il Bootloader GRUB
+# Install the GRUB bootloader
 climb -S grub-k2
 
-# Installa l'editor di testo e il browser TUI
+# Install default text editor and TUI browser
 climb -S micro
 climb -S links</code></pre>
 
         <div class="note">
-            <strong>Nota:</strong> <code>climb</code> scaricherà le ricette <code>PEAKBUILD</code> dal ramo <code>k2-user-repository</code>, le compillerà tramite <code>peak-build</code> e passerà l'installazione a <code>peak</code>.
+            <strong>Note:</strong> <code>climb</code> fetches the <code>PEAKBUILD</code> recipes from the <code>k2-user-repository</code> branch, builds them using <code>peak-build</code>, and delegates installation to <code>peak</code>.
         </div>
     </section>
 
-    <!-- FASE 5 -->
+    <!-- STEP 5 -->
     <section>
-        <h2>5. Configurazione del Bootloader e Chiusura</h2>
-        <p>Installa GRUB sul disco ed installa il file di configurazione per il caricamento del kernel <code>vmlinuz-k2</code>.</p>
+        <h2>5. Bootloader Setup & Finalize</h2>
+        <p>Install GRUB onto your drive and generate the configuration file for loading <code>vmlinuz-k2</code> at startup.</p>
 
-        <pre><code># Installazione di GRUB per sistemi UEFI
+        <pre><code># Install GRUB for UEFI systems
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=K2-Linux
 
-# Generazione del file di configurazione automatico
+# Generate boot configuration file
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# Configurazione della password di root
+# Set the root password
 passwd</code></pre>
 
-        <h3>Uscita e Riavvio</h3>
-        <pre><code># Esce dal chroot
+        <h3>Exit & Reboot</h3>
+        <pre><code># Exit the chroot environment
 exit
 
-# Smonta tutte le partizioni
+# Unmount all partitions
 umount -R /mnt
 
-# Riavvia il sistema
+# Reboot into K2-Linux
 reboot</code></pre>
     </section>
 
     <footer>
-        <p>K2-Linux Project — Distribuzione e Gestione Pacchetti Ispirata alla Filosofia UNIX</p>
+        <p>K2-Linux Project — Minimalist UNIX-like Distribution & Package Management</p>
     </footer>
 </div>
 
