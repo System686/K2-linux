@@ -1,181 +1,192 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2-Linux</title>
-    <style>
-        /* CSS Reset e Variabili */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K2-Linux</title>
+  <style>
+    /* Reset essenziale e palette di colori scura */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #0f172a;
-            --text-muted: #64748b;
-            --primary-blue: #0066ff;
-            --primary-hover: #0052cc;
-            --secondary-bg: #f8fafc;
-            --border-color: #e2e8f0;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #0f172a; /* Blu scuro */
+      color: #f8fafc; /* Testo chiaro */
+      line-height: 1.6;
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 1.5rem;
-        }
+    a {
+      color: #00a3ff; /* Azzurro K2 */
+      text-decoration: none;
+    }
 
-        /* Header e Logo */
-        header {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
+    a:hover {
+      text-decoration: underline;
+    }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--text-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    /* Container centrale */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-        .logo span {
-            color: var(--primary-blue);
-        }
+    /* Header e Navigazione */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #1e293b;
+    }
 
-        /* Hero Section */
-        main {
-            text-align: center;
-            max-width: 600px;
-            margin: auto 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: monospace;
+    }
 
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1.1;
-        }
+    .logo span {
+      color: #00a3ff;
+    }
 
-        .hero-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+    nav a {
+      color: #94a3b8;
+      margin-left: 20px;
+      font-weight: 600;
+    }
 
-        /* Gruppo Bottoni */
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
+    nav a:hover {
+      color: #00a3ff;
+    }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.875rem 1.75rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
+    /* Hero / Messaggio principale */
+    .hero {
+      text-align: center;
+      padding: 60px 0 40px 0;
+    }
 
-        /* Bottone Primario: Scarica Stage3 */
-        .btn-primary {
-            background-color: var(--primary-blue);
-            color: #ffffff;
-            border: 2px solid var(--primary-blue);
-        }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
 
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-            transform: translateY(-1px);
-        }
+    .hero p {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
 
-        /* Bottone Secondario: Handbook */
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-        }
+    /* Bottoni di azione */
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
 
-        .btn-secondary:hover {
-            background-color: var(--secondary-bg);
-            border-color: var(--text-color);
-            transform: translateY(-1px);
-        }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none !important;
+    }
 
-        /* Footer */
-        footer {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
+    .btn-primary {
+      background-color: #00a3ff;
+      color: #0f172a;
+    }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.25rem;
-            }
-            .cta-group {
-                flex-direction: column;
-                width: 100%;
-            }
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
+    .btn-primary:hover {
+      background-color: #38bdf8;
+    }
+
+    .btn-secondary {
+      background-color: #1e293b;
+      color: #ffffff;
+      border: 1px solid #334155;
+    }
+
+    .btn-secondary:hover {
+      background-color: #334155;
+    }
+
+    /* Sezione Download Semplice */
+    .download-section {
+      background-color: #1e293b;
+      border-radius: 8px;
+      padding: 30px;
+      margin: 40px 0;
+      border: 1px solid #334155;
+    }
+
+    .download-section h2 {
+      align-content: center;
+      margin-bottom: 15px;
+      color: #00a3ff;
+    }
+
+    .download-list {
+      list-style: none;
+    }
+
+    .download-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #334155;
+    }
+
+    .download-list li:last-child {
+      border-bottom: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      color: #64748b;
+      font-size: 0.9rem;
+      border-top: 1px solid #1e293b;
+    }
+  </style>
 </head>
 <body>
 
+  <div class="container">
     <!-- Header -->
     <header>
-        <a href="#" class="logo">K2<span>-Linux</span></a>
+      <div class="logo"><span>K2</span>-LINUX</div>
+      <nav>
+        <a href="#about">Wiki</a>
+        <a href="#downloads">Download</a>
+        <a href="#docs">Handbook</a>
+      </nav>
     </header>
 
-    <!-- Contenuto Principale -->
-    <main>
-        <div>
-            <h1 class="hero-title">K2-Linux</h1>
-            <p class="hero-subtitle">Essenziale, performante e personalizzabile. Scarica l'archivio base o consulta la guida ufficiale per iniziare.</p>
-        </div>
+    <!-- Hero -->
+    <section class="hero" id="about">
+      <h1>K2-Linux</h1>
+      <p>Una distribuzione Linux essenziale, ottimizzata e compilata dai sorgenti. Controllo totale sul tuo sistema.</p>
+      <div class="btn-group">
+        <a href="https://github.com/System686/K2-linux/releases/download/v0.9_unstable/k2-base_system-amd64.tar.gz" class="btn btn-primary">Download Now K2-linux</a>
+        <a href="#docs" class="btn btn-secondary">Read Handbook</a>
+      </div>
+    </section>
 
-        <!-- Bottoni -->
-        <div class="cta-group">
-            <a href="https://github.com/System686/K2-linux/releases/download/v0.9_unstable/k2-base_system-amd64.tar.gz" class="btn btn-primary">Scarica Stage3</a>
-            <a href="handbook.html" class="btn btn-secondary">Handbook</a>
-        </div>
-    </main>
+    <section class="download-section" id="downloads">
+      <h2>K2-Linux, The Future Of DIY Linux Distros</h2>
+    </section>
 
-    <!-- Footer -->
     <footer>
-        &copy; 2026 K2-Linux Project. Tutti i diritti riservati.
+      <p>&copy; 2026 K2-Linux Project. Progetto Open Source.</p>
     </footer>
+  </div>
 
 </body>
 </html>
