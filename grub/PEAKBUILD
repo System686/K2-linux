@@ -1,0 +1,32 @@
+pkgname="grub"
+pkgver="2.12"
+pkgdesc="Grand Unified Bootloader (supporto BIOS ed UEFI x86_64)"
+source="https://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
+
+build() {
+    cd "${pkgname}-${pkgver}"
+
+                --sbindir=/usr/bin \
+                --sysconfdir=/etc \
+                --disable-werror \
+                --enable-grub-mkfont \
+                --with-platform=efi \
+                --target=x86_64
+
+    make -j$(nproc)
+}
+
+package() {
+    cd "${pkgname}-${pkgver}"
+    DESTDIR="$PKGDIR" make install
+
+    mkdir -p "$PKGDIR/etc/default"
+    
+    cat << 'EOF' > "$PKGDIR/etc/default/grub"
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="K2-Linux"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"
+GRUB_CMDLINE_LINUX=""
+EOF
+}

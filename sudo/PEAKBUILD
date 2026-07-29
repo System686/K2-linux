@@ -1,0 +1,22 @@
+pkgname="sudo"
+pkgver="1.9.15p5"
+pkgdesc="Give limited superuser privileges to specific users"
+source="https://www.sudo.ws/dist/sudo-${pkgver}.tar.gz"
+
+build() {
+    cd "${pkgname}-${pkgver}"
+    ./configure --prefix=/usr \
+                --sbindir=/usr/bin \
+                --libexecdir=/usr/lib/sudo \
+                --sysconfdir=/etc \
+                --with-secure-path=/usr/local/bin:/usr/bin:/bin \
+                --with-all-insults
+    make -j$(nproc)
+}
+
+package() {
+    cd "${pkgname}-${pkgver}"
+    DESTDIR="$PKGDIR" make install
+    
+    chmod 4755 "$PKGDIR/usr/bin/sudo"
+}

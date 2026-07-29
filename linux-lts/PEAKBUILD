@@ -1,0 +1,27 @@
+pkgname="linux-lts"
+pkgver="6.6.21"
+pkgdesc="The Linux Kernel (LTS)"
+source="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${pkgver}.tar.xz"
+
+build() {
+    cd "${pkgname}-${pkgver}"
+    
+    if [ ! -f .config ]; then
+        make defconfig
+    fi
+
+    make -j$(nproc) bzImage
+    make -j$(nproc) modules
+}
+
+package() {
+    cd "${pkgname}-${pkgver}"
+    
+    mkdir -p "$PKGDIR/boot"
+    
+    cp arch/x86/boot/bzImage "$PKGDIR/boot/vmlinuz-k2"
+    cp System.map "$PKGDIR/boot/System.map-k2"
+    cp .config "$PKGDIR/boot/config-k2"
+    
+    INSTALL_MOD_PATH="$PKGDIR" make modules_install
+}

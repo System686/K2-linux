@@ -1,0 +1,16 @@
+pkgname="fastfetch"
+pkgver="2.38.0"
+pkgdesc="An active, well-maintained system information tool"
+source="https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/${pkgver}.tar.gz"
+
+build() {
+    cd "${pkgname}-${pkgver}"
+    mkdir -p build && cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
+    make -j$(nproc)
+}
+
+package() {
+    cd "${pkgname}-${pkgver}/build"
+    DESTDIR="$PKGDIR" make install
+}
