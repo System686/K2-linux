@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2 OS Handbook - Guida Passo-Passo</title>
+    <title>Handbook di Installazione — K2-Linux</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -11,8 +11,9 @@
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
             --accent-color: #38bdf8;
-            --code-bg: #090d16;
+            --accent-hover: #0284c7;
             --border-color: #334155;
+            --code-bg: #090d16;
         }
 
         body {
@@ -21,61 +22,66 @@
             color: var(--text-color);
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         header {
-            text-align: center;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 20px;
             margin-bottom: 40px;
         }
 
         h1 {
-            color: var(--accent-color);
             font-size: 2.5rem;
+            color: var(--accent-color);
             margin-bottom: 10px;
         }
 
-        p.subtitle {
+        .subtitle {
             color: var(--text-muted);
             font-size: 1.1rem;
         }
 
-        .section {
+        section {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
+            font-size: 1.5rem;
             color: var(--accent-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
             margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
         }
 
-        ul {
+        h3 {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            margin-top: 20px;
+        }
+
+        ol, ul {
             padding-left: 20px;
         }
 
         li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         code {
-            font-family: "Courier New", Courier, monospace;
+            font-family: "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
             background-color: var(--code-bg);
-            color: #e2e8f0;
+            color: #38bdf8;
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.9em;
@@ -87,187 +93,161 @@
             border-radius: 6px;
             padding: 15px;
             overflow-x: auto;
-            font-family: "Courier New", Courier, monospace;
-            color: #38bdf8;
         }
 
         pre code {
-            background-color: transparent;
+            background: transparent;
             padding: 0;
-            color: inherit;
+            color: #f1f5f9;
+            display: block;
         }
 
         .note {
             background-color: rgba(56, 189, 248, 0.1);
             border-left: 4px solid var(--accent-color);
-            padding: 12px;
+            padding: 12px 15px;
             margin: 15px 0;
             border-radius: 0 4px 4px 0;
-            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 50px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-
     <header>
-        <h1>🏔️ K2 OS Handbook</h1>
-        <p class="subtitle">Guida Passo-Passo all'Installazione e Compilazione del Sistema Operativo</p>
+        <h1>K2-Linux Handbook</h1>
+        <p class="subtitle">Guida ufficiale all'installazione minimale del sistema e dell'ecosistema <code>peak</code> / <code>climb</code>.</p>
     </header>
 
-    <!-- REQUISITI -->
-    <div class="section">
-        <h2>📋 Requisiti Prerequisiti</h2>
-        <ul>
-            <li>Un PC con Linux attivo (il tuo sistema <i>host</i>).</li>
-            <li>Privilegi di amministrazione (<code>sudo</code>).</li>
-            <li>Connessione a Internet attiva per lo scaricamento dei binari statici e dei pacchetti.</li>
-            <li>Strumenti essenziali installati sull'host: <code>wget</code>, <code>tar</code>, <code>xz</code>, <code>squashfs-tools</code>, e <code>genisoimage</code> (o <code>xorriso</code>).</li>
-        </ul>
-    </div>
-
-    <!-- STEP 1 -->
-    <div class="section">
-        <h2>🛠️ Step 1: Preparazione dell'Ambiente e di K2 RootFS</h2>
-        <p>Iniziamo creando la struttura del filesystem temporaneo di K2 e scaricando i binari statici del package manager <b>XBPS</b>.</p>
-<pre><code># 1. Creazione delle directory di lavoro
-sudo mkdir -p /mnt/k2-rootfs
-cd /tmp
-
-# 2. Download dei binari statici di XBPS (versione musl)
-wget https://repo-default.voidlinux.org/static/xbps-static-latest.x86_64-musl.tar.xz
-
-# 3. Estrazione dei binari
-mkdir -p xbps-static
-tar -xf xbps-static-latest.x86_64-musl.tar.xz -C xbps-static
-
-# 4. Copia dell'albero di directory e dei binari nel RootFS di K2
-sudo mkdir -p /mnt/k2-rootfs/usr/bin /mnt/k2-rootfs/var/db/xbps/keys /mnt/k2-rootfs/etc/xbps.d
-sudo cp -a xbps-static/usr/bin/* /mnt/k2-rootfs/usr/bin/
-sudo cp -a xbps-static/var/db/xbps/keys/* /mnt/k2-rootfs/var/db/xbps/keys/
-
-# 5. Creazione del symlink standard da /bin a /usr/bin
-sudo ln -s /usr/bin /mnt/k2-rootfs/bin 2>/dev/null || true</code></pre>
-    </div>
-
-    <!-- STEP 2 -->
-    <div class="section">
-        <h2>⚙️ Step 2: Configurazione dei Repository e della Rete</h2>
-        <p>Configuriamo i mirror veloci e i server DNS affinché XBPS possa operare correttamente in chroot.</p>
-<pre><code># 1. Configurazione del mirror di rete principale (EU Mirror)
-echo "repository=https://alpha.de.repo.voidlinux.org/current/musl" | sudo tee /mnt/k2-rootfs/etc/xbps.d/00-repository-main.conf
-
-# 2. Definizione esplicita dell'architettura target
-echo "architecture=x86_64-musl" | sudo tee /mnt/k2-rootfs/etc/xbps.d/arch.conf
-
-# 3. Configurazione dei server DNS per la risoluzione dei nomi
-sudo mkdir -p /mnt/k2-rootfs/etc
-echo "nameserver 1.1.1.1" | sudo tee /mnt/k2-rootfs/etc/resolv.conf
-echo "nameserver 8.8.8.8" | sudo tee -a /mnt/k2-rootfs/etc/resolv.conf</code></pre>
-    </div>
-
-    <!-- STEP 3 -->
-    <div class="section">
-        <h2>🌀 Step 3: Entrare in Chroot e Popolare K2 OS</h2>
-        <p>Montiamo i filesystem virtuali ed entriamo nell'ambiente isolato per installare i programmi base.</p>
-<pre><code># 1. Montaggio dei filesystem di sistema dell'host
-sudo mount --bind /dev /mnt/k2-rootfs/dev
-sudo mount --bind /proc /mnt/k2-rootfs/proc
-sudo mount --bind /sys /mnt/k2-rootfs/sys
-
-# 2. Accesso all'ambiente chroot
-sudo chroot /mnt/k2-rootfs /bin/sh</code></pre>
-
-        <div class="note">I comandi seguenti vanno eseguiti <b>dentro la shell del chroot</b>:</div>
-
-<pre><code># 3. Impostazione delle variabili d'ambiente essenziali
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-export XBPS_ARCH=x86_64-musl
-
-# 4. Sincronizzazione ed installazione dei pacchetti base
-xbps-install -Sy
-xbps-install -y base-files ca-certificates busybox nano htop curl git
-
-# 5. Uscita dal chroot
-exit</code></pre>
-
-<pre><code># 6. Smontaggio pulito dei filesystem
-sudo umount -R /mnt/k2-rootfs/dev
-sudo umount -R /mnt/k2-rootfs/proc
-sudo umount -R /mnt/k2-rootfs/sys</code></pre>
-    </div>
-
-    <!-- STEP 4 -->
-    <div class="section">
-        <h2>📦 Step 4: Creazione del Core Archive (<code>k2-core.tar.gz</code>)</h2>
-        <p>Racchiudiamo il sistema operativo in un unico archivio compresso, ignorando le directory di runtime del kernel.</p>
-<pre><code>cd /mnt
-sudo tar --exclude='k2-rootfs/proc/*' \
-         --exclude='k2-rootfs/sys/*' \
-         --exclude='k2-rootfs/dev/*' \
-         --exclude='k2-rootfs/run/*' \
-         --exclude='k2-rootfs/tmp/*' \
-         -cvpzf k2-core.tar.gz k2-rootfs</code></pre>
-    </div>
-
-    <!-- STEP 5 -->
-    <div class="section">
-        <h2>💿 Step 5: Assemblaggio della Live ISO Offline</h2>
-        <p>Integriamo l'archivio <code>k2-core.tar.gz</code> e uno script di installazione dentro il filesystem della Live ISO Buildroot.</p>
+    <!-- FASE 1 -->
+    <section>
+        <h2>1. Preparazione del Disco</h2>
+        <p>Avvia il sistema da una Live ISO ed effettua il partizionamento del disco di destinazione (es. <code>/dev/sda</code> o <code>/dev/nvme0n1</code>).</p>
         
-        <h3>1. Creazione dell'Overlay di Buildroot</h3>
-<pre><code>mkdir -p ~/buildroot/board/k2/overlay/root/
-cp /mnt/k2-core.tar.gz ~/buildroot/board/k2/overlay/root/</code></pre>
+        <h3>Creazione delle partizioni (UEFI/GPT)</h3>
+        <pre><code># Partiziona il disco con cfdisk
+cfdisk /dev/sda
 
-        <h3>2. Creazione dello Script di Installazione (<code>k2-install</code>)</h3>
-        <p>Crea il file <code>~/buildroot/board/k2/overlay/usr/bin/k2-install</code> ed inserisci:</p>
-<pre><code>#!/bin/sh
-echo "=== Installatore Automatico K2 OS ==="
-if [ -z "$1" ]; then
-    echo "Uso: k2-install /dev/sdX"
-    exit 1
-fi
+# Esempio di schema:
+# /dev/sda1 -> 512M (EFI System Partition)
+# /dev/sda2 -> Resto del disco (Linux Root)
 
-DISK=$1
-echo "Formattazione di ${DISK}1 in corso..."
-mkfs.ext4 -F ${DISK}1
+# Formattazione delle partizioni
+mkfs.vfat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2</code></pre>
 
-echo "Montaggio della partizione target..."
-mkdir -p /mnt/target
-mount ${DISK}1 /mnt/target
+        <h3>Montaggio dei Filesystem</h3>
+        <pre><code># Monta la root di destinazione
+mount /dev/sda2 /mnt
 
-echo "Scompattamento del sistema K2 OS..."
-tar -xzf /root/k2-core.tar.gz -C /mnt/target
+# Crea e monta la partizione EFI
+mkdir -p /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi</code></pre>
+    </section>
 
-echo "Installazione completata con successo! Ora puoi riavviare."</code></pre>
+    <!-- FASE 2 -->
+    <section>
+        <h2>2. Bootstrap del Sistema Base</h2>
+        <p>Estrai la RootFS di base di K2-Linux ed esegui il bind dei filesystem virtuali prima di entrare in ambiente chroot.</p>
 
-<pre><code># Rendi lo script eseguibile
-chmod +x ~/buildroot/board/k2/overlay/usr/bin/k2-install</code></pre>
+        <pre><code># Estrazione del sistema base
+tar -xvf k2-base-rootfs.tar.xz -C /mnt
 
-        <h3>3. Compilazione dell'ISO</h3>
-<pre><code>cd ~/buildroot
-make menuconfig
-# Configura: System configuration -> Root filesystem overlay directories
-# Imposta il percorso su: board/k2/overlay
+# Montaggio dei filesystem virtuali
+mount --bind /dev /mnt/dev
+mount --bind /dev/pts /mnt/dev/pts
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys
+mount --bind /run /mnt/run
 
-make</code></pre>
-    </div>
+# Entra nell'ambiente K2-Linux
+chroot /mnt /bin/bash</code></pre>
+    </section>
 
-    <!-- STEP 6 -->
-    <div class="section">
-        <h2>🚀 Step 6: Scrittura su USB e Avvio di K2 OS</h2>
-        <ol>
-            <li>Scrivi l'immagine sulla tua chiavetta USB (sostituisci <code>/dev/sdX</code> con il tuo dispositivo):
-<pre><code>sudo dd if=output/images/rootfs.iso9660 of=/dev/sdX bs=4M status=progress conv=fdatasync</code></pre>
-            </li>
-            <li>Inserisci la chiavetta USB nel PC target ed esegui l'avvio da BIOS/UEFI.</li>
-            <li>Avvia l'installazione guidata digitando:
-<pre><code>k2-install /dev/sda</code></pre>
-            </li>
-        </ol>
-    </div>
+    <!-- FASE 3 -->
+    <section>
+        <h2>3. Configurazione dell'Ambiente e Variabili</h2>
+        <p>Configura lo script delle variabili di sistema in <code>/etc/profile.d/k2-env.sh</code> per far individuare i binari, i percorsi KUR e l'editor di testo predefinito.</p>
 
+        <pre><code>cat &lt;&lt; 'EOF' &gt; /etc/profile.d/k2-env.sh
+#!/usr/bin/env bash
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
+export MANPATH="/usr/share/man:${MANPATH:-}"
+
+export KUR_REPO_URL="https://github.com/k2-linux/kur.git"
+export KUR_BRANCH="k2-user-repository"
+
+export K2_CACHE_DIR="${HOME}/.cache/k2"
+export K2_BUILD_DIR="${HOME}/.cache/k2/build"
+
+export EDITOR="micro"
+export VISUAL="micro"
+export PAGER="less"
+export BROWSER="links"
+export TERM="xterm-256color"
+EOF
+
+source /etc/profile.d/k2-env.sh</code></pre>
+    </section>
+
+    <!-- FASE 4 -->
+    <section>
+        <h2>4. Installazione di Kernel, GRUB e Strumenti</h2>
+        <p>Scarica ed installa i pacchetti fondamentali dal K2 User Repository usando il gestore pacchetti <code>climb</code>.</p>
+
+        <pre><code># Installa il Kernel ottimizzato per K2
+climb -S linux-k2
+
+# Installa il Bootloader GRUB
+climb -S grub-k2
+
+# Installa l'editor di testo e il browser TUI
+climb -S micro
+climb -S links</code></pre>
+
+        <div class="note">
+            <strong>Nota:</strong> <code>climb</code> scaricherà le ricette <code>PEAKBUILD</code> dal ramo <code>k2-user-repository</code>, le compillerà tramite <code>peak-build</code> e passerà l'installazione a <code>peak</code>.
+        </div>
+    </section>
+
+    <!-- FASE 5 -->
+    <section>
+        <h2>5. Configurazione del Bootloader e Chiusura</h2>
+        <p>Installa GRUB sul disco ed installa il file di configurazione per il caricamento del kernel <code>vmlinuz-k2</code>.</p>
+
+        <pre><code># Installazione di GRUB per sistemi UEFI
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=K2-Linux
+
+# Generazione del file di configurazione automatico
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# Configurazione della password di root
+passwd</code></pre>
+
+        <h3>Uscita e Riavvio</h3>
+        <pre><code># Esce dal chroot
+exit
+
+# Smonta tutte le partizioni
+umount -R /mnt
+
+# Riavvia il sistema
+reboot</code></pre>
+    </section>
+
+    <footer>
+        <p>K2-Linux Project — Distribuzione e Gestione Pacchetti Ispirata alla Filosofia UNIX</p>
+    </footer>
 </div>
 
 </body>
