@@ -16,6 +16,7 @@
             background-color: #0d1117;
             color: #c9d1d9;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .navbar {
@@ -91,21 +92,28 @@
             gap: 1.5rem;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
         }
 
-        .download-btn {
+        .download-btn, .handbook-btn {
             display: inline-flex;
             align-items: center;
-            background-color: #238636;
-            color: #ffffff;
-            text-decoration: none;
+            justify-content: center;
             padding: 0.8rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
             border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .download-btn {
+            background-color: #238636;
+            color: #ffffff;
             border: 1px solid rgba(240, 246, 252, 0.1);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: background-color 0.2s ease, transform 0.1s ease;
         }
 
         .download-btn:hover {
@@ -113,18 +121,10 @@
         }
 
         .handbook-btn {
-            display: inline-flex;
-            align-items: center;
             background-color: #21262d;
             color: #c9d1d9;
-            text-decoration: none;
-            padding: 0.8rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 6px;
             border: 1px solid #30363d;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
 
         .handbook-btn:hover {
@@ -146,24 +146,24 @@
         .documentation {
             max-width: 850px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 4rem 1.5rem;
             scroll-margin-top: 4rem;
         }
 
         h2 {
             font-size: 2rem;
             color: #f0f6fc;
-            margin-top: 3rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #21262d;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #30363d;
             padding-bottom: 0.5rem;
         }
 
         h3 {
             font-size: 1.3rem;
             color: #f0f6fc;
-            margin-top: 1.8rem;
-            margin-bottom: 0.6rem;
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
         }
 
         .documentation p {
@@ -179,6 +179,7 @@
             padding: 1.2rem;
             overflow-x: auto;
             margin-bottom: 1.5rem;
+            max-width: 100%;
         }
 
         pre code {
@@ -188,6 +189,7 @@
             border-radius: 0;
             font-size: 90%;
             color: #e6edf3;
+            white-space: pre;
         }
 
         .note {
@@ -196,12 +198,25 @@
             padding: 1.2rem;
             border-radius: 0 6px 6px 0;
             margin-bottom: 1.5rem;
+            max-width: 100%;
         }
 
         .note p {
             margin-bottom: 0;
             color: #db6d28;
             font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .nav-container {
+                padding: 0.8rem 1rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -237,7 +252,7 @@
         <h2>k2-linux Installation Handbook</h2>
         <p>This technical manual outlines the precise deployment path required to initialize the k2-linux environment utilizing standard system administration methodologies.</p>
 
-        <h2>1. Storage Initialization & Volume Architecture</h2>
+        <h3>1. Storage Initialization & Volume Architecture</h3>
         <p>Boot the machine utilizing a minimal live utility environment. Partition your target hardware device and initialize the necessary mount infrastructure:</p>
         <pre><code>mount /dev/sdX2 /mnt
 mkdir -p /mnt/boot
@@ -247,14 +262,14 @@ mount /dev/sdX1 /mnt/boot</code></pre>
             <p style="color: #c9d1d9; font-weight: normal; margin-top: 0.5rem;">Swap space utilization remains entirely optional depending on target environment hardware constraints.</p>
         </div>
 
-        <h2>2. Rootfs Deployment</h2>
+        <h3>2. Rootfs Deployment</h3>
         <p>Navigate directly inside the primary target mount terminal structure and pull the official archive sequence using available text-based components:</p>
         <pre><code>cd /mnt
-links https://github.com/System686/K2-linux/releases/tag/v1.0</code></pre>
+links https://github.com</code></pre>
         <p>Unpack the distributed filesystem tree directly onto the storage node:</p>
         <pre><code>tar -xf K2-linux.tar.xz</code></pre>
 
-        <h2>3. Interface Translation & Core Jailing</h2>
+        <h3>3. Interface Translation & Core Jailing</h3>
         <p>Bind host resources across to the isolated storage mount to preserve system information trees prior to establishing the system jail:</p>
         <pre><code>mount --types proc /proc /mnt/proc
 mount --rbind /sys /mnt/sys
@@ -267,14 +282,14 @@ cp --dereference /etc/resolv.conf /mnt/etc/</code></pre>
 source /etc/profile
 export PS1="(chroot) $PS1"</code></pre>
 
-        <h2>4. Regional Time & System Language Initialization</h2>
+        <h3>4. Regional Time & System Language Initialization</h3>
         <p>Once bounded inside the operational shell layout, define the structural location coordinates and character sets natively.</p>
         
-        <h3>Hardware Clock Calibration</h3>
+        <strong>Hardware Clock Calibration</strong>
         <pre><code>ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
 hwclock --systohc</code></pre>
 
-        <h3>Localedef Compilation</h3>
+        <strong>Localedef Compilation</strong>
         <p>Modify the dictionary file properties using preferred tools to un-comment your target configurations:</p>
         <pre><code>nano /etc/locale.gen</code></pre>
         <p>Launch the compiled parser sequence engine manually to map system configurations cleanly:</p>
@@ -282,9 +297,11 @@ hwclock --systohc</code></pre>
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 export LANG=en_US.UTF-8</code></pre>
 
-        <h2>5. Package Layer Infrastructure Activation</h2>
-        <p>With terminal resolution and character sets fully locked down, invoking the package deployment stack will pull the additional binaries required to complete the installation sequence.</p>
-    </section>
-
-</body>
-</html>
+        <h3>5. Package Management via Peak</h3>
+        <p>The k2-linux environment relies on the Go-based <code>peak</code> binary stack located in <code>/usr/bin</code> to handle binary deployment operations. Because the tool directly writes downloaded assets into protected system locations (<code>/usr/bin</code>), execution requires elevated administrative privileges outside the initial setup phase.</p>
+        
+        <strong>Installing Packages</strong>
+        <p>To acquire and synchronize a new binary payload down into the local system tree, invoke the synchronization parameter:</p>
+        <pre><code>peak -S package_name</code></pre>
+        
+        <strong>Removing Packages</strong>
