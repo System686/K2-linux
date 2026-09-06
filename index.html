@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2-Linux | Official Home</title>
+    <title>k2-linux | Official Home & Documentation</title>
     <style>
         * {
             margin: 0;
@@ -28,7 +28,7 @@
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -62,18 +62,18 @@
         }
 
         .hero {
-            min-height: 100vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 2rem;
-            padding-top: 5rem;
+            padding-top: 6rem;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #f0f6fc;
             margin-bottom: 1rem;
             letter-spacing: -0.5px;
@@ -86,10 +86,16 @@
             margin-bottom: 2.5rem;
         }
 
+        .btn-container {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .download-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
             background-color: #238636;
             color: #ffffff;
             text-decoration: none;
@@ -106,14 +112,96 @@
             background-color: #2ea44f;
         }
 
-        .download-btn:active {
+        .handbook-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #21262d;
+            color: #c9d1d9;
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .handbook-btn:hover {
+            background-color: #30363d;
+            border-color: #8b949e;
+            color: #f0f6fc;
+        }
+
+        .download-btn:active, .handbook-btn:active {
             transform: scale(0.98);
         }
 
         .file-info {
-            margin-top: 0.75rem;
+            margin-top: 1rem;
             font-size: 0.85rem;
             color: #484f58;
+        }
+
+        .documentation {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            scroll-margin-top: 4rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #f0f6fc;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #f0f6fc;
+            margin-top: 1.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .documentation p {
+            margin-bottom: 1.2rem;
+            color: #c9d1d9;
+            font-size: 1.05rem;
+        }
+
+        pre {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        pre code {
+            font-family: ui-monospace, SFMono-Regular, SF Pro Mono, Menlo, Monaco, Consolas, monospace;
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: 90%;
+            color: #e6edf3;
+        }
+
+        .note {
+            background-color: rgba(219, 109, 40, 0.1);
+            border-left: 4px solid #db6d28;
+            padding: 1.2rem;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .note p {
+            margin-bottom: 0;
+            color: #db6d28;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -121,25 +209,82 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">K2-Linux</a>
+            <a href="#" class="logo">k2-linux</a>
             <ul class="nav-links">
-
-                <li><a href="K2-handbook.html">K2-Linux Handbook</a></li>
-
+                <li><a href="#">Home</a></li>
+                <li><a href="#handbook">k2-linux Handbook</a></li>
             </ul>
         </div>
     </nav>
 
     <main class="hero">
-        <h1>K2-Linux</h1>
-        <p>Official release page. Download the official source tarball for K2-Linux v1.0.</p>
+        <h1>k2-linux</h1>
+        <p>A minimalist, independent Linux deployment ecosystem built for traditional chroot installations.</p>
         
-        <a href="https://github.com" class="download-btn">
-            Download Tarball (.tar.xz)
-        </a>
+        <div class="btn-container">
+            <a href="https://github.com" class="download-btn">
+                Download Tarball (.tar.xz)
+            </a>
+            <a href="#handbook" class="handbook-btn">
+                k2-linux Handbook
+            </a>
+        </div>
         
-        <div class="file-info">Version: v1.0 | Format: tar.xz</div>
+        <div class="file-info">Version: v1.0 | Target Release Layer: GitHub Ecosystem</div>
     </main>
+
+    <section id="handbook" class="documentation">
+        <h2>k2-linux Installation Handbook</h2>
+        <p>This technical manual outlines the precise deployment path required to initialize the k2-linux environment utilizing standard system administration methodologies.</p>
+
+        <h2>1. Storage Initialization & Volume Architecture</h2>
+        <p>Boot the machine utilizing a minimal live utility environment. Partition your target hardware device and initialize the necessary mount infrastructure:</p>
+        <pre><code>mount /dev/sdX2 /mnt
+mkdir -p /mnt/boot
+mount /dev/sdX1 /mnt/boot</code></pre>
+        <div class="note">
+            <p>Memory Architecture</p>
+            <p style="color: #c9d1d9; font-weight: normal; margin-top: 0.5rem;">Swap space utilization remains entirely optional depending on target environment hardware constraints.</p>
+        </div>
+
+        <h2>2. Rootfs Deployment</h2>
+        <p>Navigate directly inside the primary target mount terminal structure and pull the official archive sequence using available text-based components:</p>
+        <pre><code>cd /mnt
+links https://github.com/System686/K2-linux/releases/tag/v1.0</code></pre>
+        <p>Unpack the distributed filesystem tree directly onto the storage node:</p>
+        <pre><code>tar -xf K2-linux.tar.xz</code></pre>
+
+        <h2>3. Interface Translation & Core Jailing</h2>
+        <p>Bind host resources across to the isolated storage mount to preserve system information trees prior to establishing the system jail:</p>
+        <pre><code>mount --types proc /proc /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --make-rslave /mnt/sys
+mount --rbind /dev /mnt/dev
+mount --make-rslave /mnt/dev
+cp --dereference /etc/resolv.conf /mnt/etc/</code></pre>
+        <p>Execute the environment context shift operation:</p>
+        <pre><code>chroot /mnt /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"</code></pre>
+
+        <h2>4. Regional Time & System Language Initialization</h2>
+        <p>Once bounded inside the operational shell layout, define the structural location coordinates and character sets natively.</p>
+        
+        <h3>Hardware Clock Calibration</h3>
+        <pre><code>ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
+hwclock --systohc</code></pre>
+
+        <h3>Localedef Compilation</h3>
+        <p>Modify the dictionary file properties using preferred tools to un-comment your target configurations:</p>
+        <pre><code>nano /etc/locale.gen</code></pre>
+        <p>Launch the compiled parser sequence engine manually to map system configurations cleanly:</p>
+        <pre><code>locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+export LANG=en_US.UTF-8</code></pre>
+
+        <h2>5. Package Layer Infrastructure Activation</h2>
+        <p>With terminal resolution and character sets fully locked down, invoking the package deployment stack will pull the additional binaries required to complete the installation sequence.</p>
+    </section>
 
 </body>
 </html>
