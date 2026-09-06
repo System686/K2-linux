@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K2-Linux Handbook | Installation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #161b22;
+            border-bottom: 1px solid #30363d;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #f0f6fc;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #58a6ff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #f0f6fc;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #8b949e;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: #f0f6fc;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 0.3rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: #f0f6fc;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: #c9d1d9;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, SF Pro Mono, Menlo, Monaco, Consolas, monospace;
+            background-color: rgba(110, 118, 129, 0.4);
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #ff7b72;
+        }
+
+        pre {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: 90%;
+            color: #e6edf3;
+        }
+
+        .note {
+            background-color: rgba(219, 109, 40, 0.1);
+            border-left: 4px solid #db6d28;
+            padding: 1rem;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .note p {
+            margin-bottom: 0;
+            color: #db6d28;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">K2-Linux</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="handbook.html" class="active">K2-Linux Handbook</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>K2-Linux Installation Handbook</h1>
+        <p class="subtitle">A comprehensive technical guide to deploying K2-Linux from a minimal live environment.</p>
+
+        <section id="environment">
+            <h2>1. Environment Preparation</h2>
+            <p>Boot your target system using a minimal live ISO (e.g., Gentoo or Slackware). Ensure network connectivity is established before proceeding.</p>
+        </section>
+
+        <section id="partitioning">
+            <h2>2. Disk Partitioning & Mounting</h2>
+            <p>Initialize your storage device using <code>fdisk</code> or <code>cfdisk</code>. Allocate your primary system partition and an optional swap partition.</p>
+            
+            <p>Mount the root partition onto the target deployment directory:</p>
+            <pre><code>mount /dev/sdX2 /mnt</code></pre>
+            
+            <p>Generate the boot directory structure and map the primary boot partition:</p>
+            <pre><code>mkdir -p /mnt/boot
+mount /dev/sdX1 /mnt/boot</code></pre>
+            
+            <div class="note">
+                <p>Optional Architecture Note</p>
+                <p style="color: #c9d1d9; font-weight: normal; margin-top: 0.5rem;">If a swap allocation is required, initialize and activate it using <code>mkswap /dev/sdX3 && swapon /dev/sdX3</code>.</p>
+            </div>
+        </section>
+
+        <section id="rootfs">
+            <h2>3. Rootfs Stage Acquisition</h2>
+            <p>Navigate into the root deployment mount point:</p>
+            <pre><code>cd /mnt</code></pre>
+            <p>Deploy a text-based web browser instance to retrieve the official K2-Linux rootfs package:</p>
+            <pre><code>links https://github.com</code></pre>
+            <p>Decompress and unpack the acquired tarball sequence directly into the filesystem root tree:</p>
+            <pre><code>tar -xf K2-linux.tar.xz</code></pre>
+        </section>
+
+        <section id="chroot-prep">
+            <h2>4. Chroot Preparation & Virtual Filesystem Mapping</h2>
+            <p>Export the host system virtual filesystems to the destination node to ensure kernel interface translation:</p>
+            <pre><code>mount --types proc /proc /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --make-rslave /mnt/sys
+mount --rbind /dev /mnt/dev
+mount --make-rslave /mnt/dev</code></pre>
+            
+            <p>Copy the active network domain resolution configuration to preserve DNS connectivity within the jail:</p>
+            <pre><code>cp --dereference /etc/resolv.conf /mnt/etc/</code></pre>
+        </section>
+
+        <section id="jail">
+            <h2>5. Entering the Chroot Jail</h2>
+            <p>Restrict the operational execution layer to the new target root layout:</p>
+            <pre><code>chroot /mnt /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"</code></pre>
+        </section>
+
+        <section id="localization">
+            <h2>6. Localization & Timezone Configuration</h2>
+            <p>Define the target region environment metrics inside the active system configuration.</p>
+            
+            <h3>Timezone Definition</h3>
+            <p>Link the designated zone info profile to the local hardware clock configuration path:</p>
+            <pre><code>ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+hwclock --systohc</code></pre>
+            
+            <h3>Locale Initialization</h3>
+            <p>Uncomment your preferred character sets inside the localized dictionary descriptor:</p>
+            <pre><code>nano /etc/locale.gen</code></pre>
+            <p>Compile the selected definitions and export the default system language property:</p>
+            <pre><code>locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+export LANG=en_US.UTF-8</code></pre>
+        </section>
+
+        <section id="finalization">
+            <h2>7. Software Packages Deployment</h2>
+            <p>With network resolution and localization parameters properly bound, the system is fully operational. You may now invoke your target package distribution stack to populate the operating system binary tree.</p>
+        </section>
+    </div>
+
+</body>
+</html>
