@@ -265,7 +265,7 @@ mount /dev/sdX1 /mnt/boot</code></pre>
         <h3>2. Rootfs Deployment</h3>
         <p>Navigate directly inside the primary target mount terminal structure and pull the official archive sequence using available text-based components:</p>
         <pre><code>cd /mnt
-links https://github.com</code></pre>
+links https://system686.github.io/K2-linux/</code></pre>
         <p>Unpack the distributed filesystem tree directly onto the storage node:</p>
         <pre><code>tar -xf K2-linux.tar.xz</code></pre>
 
@@ -279,7 +279,6 @@ mount --make-rslave /mnt/dev
 cp --dereference /etc/resolv.conf /mnt/etc/</code></pre>
         <p>Execute the environment context shift operation:</p>
         <pre><code>chroot /mnt /bin/bash
-source /etc/profile
 export PS1="(chroot) $PS1"</code></pre>
 
         <h3>4. Regional Time & System Language Initialization</h3>
@@ -303,5 +302,7 @@ export LANG=en_US.UTF-8</code></pre>
         <strong>Installing Packages</strong>
         <p>To acquire and synchronize a new binary payload down into the local system tree, invoke the synchronization parameter:</p>
         <pre><code>peak -S package_name</code></pre>
+        <strong>Kernel<strong>
+        <p>In the 1.0 you don't have to worry about the kernel, there is a linux 6.18 lts custom kernel pre installed in your tarball</p>
         
         <strong>Removing Packages</strong>
