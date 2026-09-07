@@ -3,238 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K2-Linux Handbook | Installation Guide</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            line-height: 1.6;
-        }
-
-        .navbar {
-            background-color: #161b22;
-            border-bottom: 1px solid #30363d;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 2rem;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 1.25rem;
-            color: #f0f6fc;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #8b949e;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: #58a6ff;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 7rem 2rem 4rem 2rem;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: #f0f6fc;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid #21262d;
-            padding-bottom: 1rem;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #8b949e;
-            margin-bottom: 3rem;
-        }
-
-        h2 {
-            font-size: 1.75rem;
-            color: #f0f6fc;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 0.3rem;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            color: #f0f6fc;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            margin-bottom: 1.2rem;
-            color: #c9d1d9;
-        }
-
-        code {
-            font-family: ui-monospace, SFMono-Regular, SF Pro Mono, Menlo, Monaco, Consolas, monospace;
-            background-color: rgba(110, 118, 129, 0.4);
-            padding: 0.2rem 0.4rem;
-            border-radius: 6px;
-            font-size: 85%;
-            color: #ff7b72;
-        }
-
-        pre {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 1rem;
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
-        }
-
-        pre code {
-            background-color: transparent;
-            padding: 0;
-            border-radius: 0;
-            font-size: 90%;
-            color: #e6edf3;
-        }
-
-        .note {
-            background-color: rgba(219, 109, 40, 0.1);
-            border-left: 4px solid #db6d28;
-            padding: 1rem;
-            border-radius: 0 6px 6px 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .note p {
-            margin-bottom: 0;
-            color: #db6d28;
-            font-weight: 500;
-        }
-    </style>
+    <title>k2-linux Handbook | Installation Guide</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">K2-Linux</a>
+            <a href="index.html" class="logo">k2<span>linux</span></a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="handbook.html" class="active">K2-Linux Handbook</a></li>
+                <li><a href="handbook.html">Handbook</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="container">
-        <h1>K2-Linux Installation Handbook</h1>
-        <p class="subtitle">A comprehensive technical guide to deploying K2-Linux from a minimal live environment.</p>
+    <div class="doc-wrapper">
+        <aside class="sidebar">
+            <h4>Installation Index</h4>
+            <ul>
+                <li><a href="#step1">1. Partitioning</a></li>
+                <li><a href="#step2">2. Rootfs Unpacking</a></li>
+                <li><a href="#step3">3. Chroot Mapping</a></li>
+                <li><a href="#step4">4. System Locales</a></li>
+                <li><a href="#step5">5. Package Manager</a></li>
+                <li><a href="#step6">6. Boot & Kernel</a></li>
+                <li><a href="#step7">7. Wireless Networking</a></li>
+            </ul>
+        </aside>
 
-        <section id="environment">
-            <h2>1. Environment Preparation</h2>
-            <p>Boot your target system using a minimal live ISO (e.g., Gentoo or Slackware). Ensure network connectivity is established before proceeding.</p>
-        </section>
+        <section class="documentation">
+            <h2 class="main-title">k2-linux Installation Handbook</h2>
+            <p>This technical roadmap details the parameters required to initialize the production-ready k2-linux core directly from a minimal environment layer.</p>
 
-        <section id="partitioning">
-            <h2>2. Disk Partitioning & Mounting</h2>
-            <p>Initialize your storage device using <code>fdisk</code> or <code>cfdisk</code>. Allocate your primary system partition and an optional swap partition.</p>
-            
-            <p>Mount the root partition onto the target deployment directory:</p>
-            <pre><code>mount /dev/sdX2 /mnt</code></pre>
-            
-            <p>Generate the boot directory structure and map the primary boot partition:</p>
-            <pre><code>mkdir -p /mnt/boot
+            <div id="step1" class="doc-section">
+                <h3>1. Storage Initialization & Volume Architecture</h3>
+                <p>Initialize your target physical block device using standard system live utilities. Map your root framework partition and configure the primary structure paths:</p>
+                <pre><code>mount /dev/sdX2 /mnt
+mkdir -p /mnt/boot
 mount /dev/sdX1 /mnt/boot</code></pre>
-            
-            <div class="note">
-                <p>Optional Architecture Note</p>
-                <p style="color: #c9d1d9; font-weight: normal; margin-top: 0.5rem;">If a swap allocation is required, initialize and activate it using <code>mkswap /dev/sdX3 && swapon /dev/sdX3</code>.</p>
+                <div class="note">
+                    <h5>Memory Allocation</h5>
+                    <p>Swap node registration remains entirely optional based on your environment's performance thresholds.</p>
+                </div>
             </div>
-        </section>
 
-        <section id="rootfs">
-            <h2>3. Rootfs Stage Acquisition</h2>
-            <p>Navigate into the root deployment mount point:</p>
-            <pre><code>cd /mnt</code></pre>
-            <p>Deploy a text-based web browser instance to retrieve the official K2-Linux rootfs package:</p>
-            <pre><code>links https://github.com</code></pre>
-            <p>Decompress and unpack the acquired tarball sequence directly into the filesystem root tree:</p>
-            <pre><code>tar -xf K2-linux.tar.xz</code></pre>
-        </section>
+            <div id="step2" class="doc-section">
+                <h3>2. Rootfs Infrastructure Acquisition</h3>
+                <p>Navigate directly inside the primary deployment mount target and execute a payload capture using available CLI clients mapping the release node branch:</p>
+                <pre><code>cd /mnt
+links https://github.com</code></pre>
+                <p>Extract the complete filesystem deployment payload tree directly onto the target node layout:</p>
+                <pre><code>tar -xf K2-linux.tar.xz</code></pre>
+            </div>
 
-        <section id="chroot-prep">
-            <h2>4. Chroot Preparation & Virtual Filesystem Mapping</h2>
-            <p>Export the host system virtual filesystems to the destination node to ensure kernel interface translation:</p>
-            <pre><code>mount --types proc /proc /mnt/proc
+            <div id="step3" class="doc-section">
+                <h3>3. Interface Translation & Core Jailing</h3>
+                <p>Bind host system endpoints across to the local mount destination directory structure to maintain system information interfaces prior to entering jail configuration layers:</p>
+                <pre><code>mount --types proc /proc /mnt/proc
 mount --rbind /sys /mnt/sys
 mount --make-rslave /mnt/sys
 mount --rbind /dev /mnt/dev
-mount --make-rslave /mnt/dev</code></pre>
-            
-            <p>Copy the active network domain resolution configuration to preserve DNS connectivity within the jail:</p>
-            <pre><code>cp --dereference /etc/resolv.conf /mnt/etc/</code></pre>
-        </section>
-
-        <section id="jail">
-            <h2>5. Entering the Chroot Jail</h2>
-            <p>Restrict the operational execution layer to the new target root layout:</p>
-            <pre><code>chroot /mnt /bin/bash
+mount --make-rslave /mnt/dev
+cp --dereference /etc/resolv.conf /mnt/etc/</code></pre>
+                <p>Isolate your execution session into the target local root operational tree shell:</p>
+                <pre><code>chroot /mnt /bin/bash
 source /etc/profile
 export PS1="(chroot) $PS1"</code></pre>
-        </section>
+            </div>
 
-        <section id="localization">
-            <h2>6. Localization & Timezone Configuration</h2>
-            <p>Define the target region environment metrics inside the active system configuration.</p>
-            
-            <h3>Timezone Definition</h3>
-            <p>Link the designated zone info profile to the local hardware clock configuration path:</p>
-            <pre><code>ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+            <div id="step4" class="doc-section">
+                <h3>4. Regional Time & System Language Initialization</h3>
+                <p>Configure internal clock structures and generate the multi-national character layout dictionaries within the active system environment layers.</p>
+                
+                <strong>Hardware Clock Calibration</strong>
+                <pre><code>ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
 hwclock --systohc</code></pre>
-            
-            <h3>Locale Initialization</h3>
-            <p>Uncomment your preferred character sets inside the localized dictionary descriptor:</p>
-            <pre><code>nano /etc/locale.gen</code></pre>
-            <p>Compile the selected definitions and export the default system language property:</p>
-            <pre><code>locale-gen
+
+                <strong>Localedef Compilation</strong>
+                <p>Open the localized options map with standard utilities and strip the comment flags from your required parameters:</p>
+                <pre><code>nano /etc/locale.gen</code></pre>
+                <p>Compile the active entries and register the global deployment system language property:</p>
+                <pre><code>locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 export LANG=en_US.UTF-8</code></pre>
-        </section>
+            </div>
 
-        <section id="finalization">
-            <h2>7. Software Packages Deployment</h2>
-            <p>With network resolution and localization parameters properly bound, the system is fully operational. You may now invoke your target package distribution stack to populate the operating system binary tree.</p>
+            <div id="step5" class="doc-section">
+                <h3>5. Package Management via Peak</h3>
+                <p>The system leverages a Go-compiled package deployment core located within <code>/usr/bin</code>. Because this core executes writes directly onto system paths, standard security models demand elevated privileges outside setup phases.</p>
+                
+                <strong>Synchronizing System Elements</strong>
+                <pre><code>peak -S package_name</code></pre>
+                
+                <strong>Purging System Elements</strong>
+                <pre><code>peak -R package_name</code></pre>
+                
+                <div class="note">
+                    <h5>Privilege Control</h5>
+                    <p>While inside the setup chroot jail shell, you act as the default system root administrator. Once the final system boots natively under standard access structures, prepending <code>sudo</code> (e.g., <code>sudo peak -S package_name</code>) is mandatory.</p>
+                </div>
+            </div>
+
+            <div id="step6" class="doc-section">
+                <h3>6. Bootloader Initialization & Access Security</h3>
+                <p>The k2-linux system includes a pre-compiled, highly optimized minimalist monolithic LTS kernel architecture built natively within the local <code>/boot</code> root directory structure. Configure root safety parameters and execute the MBR boot system structure mapping:</p>
+                <pre><code>passwd root
+grub-install /dev/sdX
+grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+            </div>
+
+            <div id="step7" class="doc-section">
+                <h3>7. Wireless Network Layer Configuration</h3>
+                <p>Select and initialize your preferred active endpoint communication daemon infrastructure to enable system internet communication modules post-reboot.</p>
+                
+                <strong>Automated Daemon Routing (NetworkManager)</strong>
+                <pre><code>systemctl enable NetworkManager
+nmcli device wifi connect "Your_SSID" password "Your_Password"</code></pre>
+
+                <strong>Minimal Manual Scripting (wpa_supplicant)</strong>
+                <pre><code>wpa_passphrase "Your_SSID" "Your_Password" > /etc/wpa_supplicant/wpa_supplicant.conf
+wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
+dhcpcd wlan0</code></pre>
+            </div>
         </section>
     </div>
+
+    <footer>
+        <p>&copy; 2026 k2-linux Project. Built for professional, stable development deployment.</p>
+    </footer>
 
 </body>
 </html>
