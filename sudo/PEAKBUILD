@@ -5,18 +5,26 @@ source="https://www.sudo.ws/dist/sudo-${pkgver}.tar.gz"
 
 build() {
     cd "${pkgname}-${pkgver}"
-    ./configure --prefix=/usr \
-                --sbindir=/usr/bin \
-                --libexecdir=/usr/lib/sudo \
-                --sysconfdir=/etc \
-                --with-secure-path=/usr/local/bin:/usr/bin:/bin \
-                --with-all-insults
-    make -j$(nproc)
+
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --libexecdir=/usr/lib/sudo \
+        --sysconfdir=/etc \
+        --with-secure-path=/usr/local/bin:/usr/bin:/bin \
+        --with-all-insults
+
+    make -j"$(nproc)"
 }
 
 package() {
     cd "${pkgname}-${pkgver}"
-    DESTDIR="$PKGDIR" make install
-    
-    chmod 4755 "$PKGDIR/usr/bin/sudo"
+
+    make DESTDIR="$pkgdir" install
+
+    # sudo deve essere eseguibile setuid root.
+    chmod 4755 "$pkgdir/usr/bin/sudo"
+
+    # Assicura proprietario e gruppo corretti.
+    chown root:root "$pkgdir/usr/bin/sudo"
 }
